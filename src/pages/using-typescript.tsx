@@ -1,9 +1,11 @@
 // If you don't want to use TypeScript you can delete this file!
-import React from "react"
-import { PageProps, Link, graphql } from "gatsby"
+import React from 'react'
+import type { PageProps } from 'gatsby'
+import { Link, graphql } from 'gatsby'
+import { styled } from 'linaria/react'
 
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Layout from '../components/layout'
+import SEO from '../components/seo'
 
 type DataProps = {
   site: {
@@ -25,11 +27,12 @@ const UsingTypescript: React.FC<PageProps<DataProps>> = ({ data, path }) => (
       run <em>tsc --init</em> to create a <em>.tsconfig</em> file.
     </p>
     <p>
-      You're currently on the page "{path}" which was built on{" "}
+      You're currently on the page "{path}" which was built on{' '}
       {data.site.buildTime}.
     </p>
+    <Header>oi</Header>
     <p>
-      To learn more, head over to our{" "}
+      To learn more, head over to our{' '}
       <a href="https://www.gatsbyjs.com/docs/typescript/">
         documentation about TypeScript
       </a>
@@ -47,4 +50,8 @@ export const query = graphql`
       buildTime(formatString: "YYYY-MM-DD hh:mm a z")
     }
   }
+`
+
+const Header = styled.div`
+  background-color: red;
 `
