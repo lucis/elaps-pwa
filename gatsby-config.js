@@ -9,6 +9,13 @@ module.exports = {
     `gatsby-plugin-typescript`,
     `gatsby-plugin-linaria`,
     {
+      resolve: `gatsby-plugin-google-fonts`,
+      options: {
+        fonts: [`Roboto`],
+        display: 'swap',
+      },
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,

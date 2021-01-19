@@ -68,3 +68,6 @@ yarn-error.log
 # Yarn Integrity file
 .yarn-integrity
 .linaria-cache
+src/**/*.js
+.env.development
+.env.production

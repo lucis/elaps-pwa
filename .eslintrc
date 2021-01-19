@@ -1,1 +1,6 @@
-{ "extends": "vtex-react" }
+{
+  "extends": "vtex-react",
+  "rules": {
+    "no-use-before-define": "off"
+  }
+}

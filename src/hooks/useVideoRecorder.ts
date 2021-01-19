@@ -57,6 +57,7 @@ const useUserMedia: () => Props = () => {
 
   const startRecording = useCallback(() => {
     setBlob(null)
+    setBlobDuration('')
     timerReset()
     // TODO: Locally create types for PromisesHandler
     const recorder = new RecordRTC.RecordRTCPromisesHandler(stream, {
@@ -75,7 +76,7 @@ const useUserMedia: () => Props = () => {
         log(err)
       }
     )
-  }, [stream, timerStart])
+  }, [stream, timerReset, timerStart])
 
   const stopRecording = useCallback(() => {
     recorder
