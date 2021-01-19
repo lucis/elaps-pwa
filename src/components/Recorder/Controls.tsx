@@ -4,6 +4,7 @@ import { styled } from 'linaria/react'
 
 import RecordIcon from './RecordIcon'
 import CheckIcon from './CheckIcon'
+import Button from '../ui/Button'
 
 type Props = {
   isRecording: boolean
@@ -43,12 +44,20 @@ const RecorderControls: FC<Props> = ({
         )}
       </MinSize>
       {!isRecording && recordedDuration && (
-        <button onClick={onRetake}>Regravar</button>
+        <Button onClick={onRetake} color="blue">
+          Regravar
+        </Button>
       )}
       {!isRecording && !recordedDuration && (
-        <button onClick={onRecord}>Gravar</button>
+        <Button onClick={onRecord} color="blue">
+          Gravar
+        </Button>
       )}
-      {isRecording && <button onClick={onStop}>Parar</button>}
+      {isRecording && (
+        <Button onClick={onStop} color="red">
+          Parar
+        </Button>
+      )}
     </Wrapper>
   )
 }

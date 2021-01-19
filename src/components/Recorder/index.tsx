@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import React, { useCallback, useMemo, useRef, useEffect } from 'react'
+import React, { useMemo, useRef, useEffect } from 'react'
 import { styled } from 'linaria/react'
 
 import useVideoRecorder from '../../hooks/useVideoRecorder'
@@ -7,7 +7,7 @@ import RecorderControls from './Controls'
 import RecorderPlayer from './Player'
 
 type Props = {
-  onFinish: () => void
+  onFinish: (blob: Blob) => void
 }
 
 const VistoriaRecorder: FC<Props> = ({ onFinish }) => {
@@ -29,6 +29,12 @@ const VistoriaRecorder: FC<Props> = ({ onFinish }) => {
       blobSize: `${Math.floor(blob.size / 1000)} kb`,
     }
   }, [blob])
+
+  useEffect(() => {
+    if (blob) {
+      onFinish(blob)
+    }
+  }, [blob, onFinish])
 
   return (
     <RecorderWrapper>
@@ -64,6 +70,7 @@ const VideoPlayer: FC<{ stream: MediaStream }> = ({ stream }) => {
 
 const RecorderWrapper = styled.div`
   display: flex;
+  margin: 5px 0;
 `
 
 export default VistoriaRecorder

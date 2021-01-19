@@ -1,22 +1,118 @@
 import type { FC } from 'react'
-import React, { useEffect } from 'react'
+import React, { useCallback, useState, useMemo, useEffect } from 'react'
 import type { RouteComponentProps } from '@reach/router'
 import { styled } from 'linaria/react'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+import 'firebase/storage'
+
+import { v4 as uuidv4 } from 'uuid'
 
 import Header from './Header'
+import VistoriaRecorder from './Recorder'
+import Button from './ui/Button'
 
-const CheckInForm: FC<RouteComponentProps> = () => {
+type Props = {
+  plate: string
+}
+
+const CheckInForm: FC<RouteComponentProps> = ({ plate }) => {
+  const [loading, setLoading] = useState(false)
+  const [info, setInfo] = useState('')
+  const [video, setVideo] = useState<Blob | null>()
+  const currentTime = useMemo(() => {
+    return new Date().toLocaleString()
+  }, [])
+
+  const onSend = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault()
+      setLoading(true)
+      const storage = firebase.storage()
+      const storageRef = storage.ref()
+      const fileName = `${uuidv4()}.mkv`
+      const ref = storageRef.child(fileName)
+      const snapshot = ref.put(video)
+
+      snapshot
+        .then(() => storage.ref().child(fileName).getDownloadURL())
+        .then((url) => {
+          setLoading(false)
+          const db = firebase.firestore()
+
+          db.collection('checkins')
+            .add({
+              time: Date.now(),
+              info: info?.length ? info : '',
+              videoURL: url,
+              plate,
+            })
+            .then(() => {
+              setLoading(false)
+              // navigate('/app')
+            })
+        })
+    },
+    [info, plate, video]
+  )
+
   return (
-    <>
-      <Header>
-        <h1>Nova Entrada</h1>
-      </Header>
-      <Wrapper>digite placa</Wrapper>
-    </>
+    <Wrapper>
+      <Label>Data e Hora</Label>
+      <Value>{currentTime}</Value>
+      <Label>Vistoria</Label>
+      <VistoriaRecorder onFinish={setVideo} />
+      <Label>Outras Informações</Label>
+      <Form onSubmit={onSend}>
+        <Textarea
+          disabled={loading}
+          onChange={(e) => setInfo(e.target.value)}
+          value={info}
+        />
+        <ButtonWrapper>
+          <Button type="submit" color="blue" disabled={loading}>
+            Enviar
+          </Button>
+        </ButtonWrapper>
+      </Form>
+    </Wrapper>
   )
 }
 
+const ButtonWrapper = styled.div`
+  margin: 25px 0;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+`
+
 const Wrapper = styled.div`
+  display: flex;
+  width: 90%
+  flex-direction: column;
+`
+
+const Label = styled.span`
+  font-weight: bold;
+  margin-top: 15px;
+`
+
+const Value = styled.span`
+  font-size: 16px;
+  min-width: 45px;
+`
+
+const Textarea = styled.textarea`
+  height: 82px;
+  background-color: #f4f4f4;
+  border: 0;
+  padding: 10px;
+  font-size: 18px;
+  margin-top: 5px;
+`
+
+const Form = styled.form`
+  width: 100%;
   display: flex;
   flex-direction: column;
 `

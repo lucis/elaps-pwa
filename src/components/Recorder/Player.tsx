@@ -37,7 +37,7 @@ const StreamVideoPlayer: FC<{ stream: MediaStream }> = ({ stream }) => {
 const Wrapper = styled.div`
   width: 70%;
   position: relative;
-  padding-bottom: 120%;
+  padding-bottom: 90%;
   float: left;
 `
 

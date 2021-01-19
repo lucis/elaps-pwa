@@ -6,6 +6,7 @@ import MaskedInput from 'react-input-mask'
 
 type Props = {
   onValidPlate: (plate: string) => void
+  disabled: boolean
 }
 
 type Form = {
@@ -25,7 +26,7 @@ const PLATE_MASK = [
   /\d/i,
 ]
 
-const LicensePlateInput: FC<Props> = ({ onValidPlate }) => {
+const LicensePlateInput: FC<Props> = ({ onValidPlate, disabled }) => {
   const { register, handleSubmit, errors } = useForm()
   const onSubmit = (data: Form) => onValidPlate(data.licensePlate)
 
@@ -47,6 +48,7 @@ const LicensePlateInput: FC<Props> = ({ onValidPlate }) => {
             mask={PLATE_MASK}
             alwaysShowMask
             beforeMaskedStateChange={transformUppercase}
+            disabled={disabled}
           >
             <Input
               id="license-plate"
@@ -57,7 +59,9 @@ const LicensePlateInput: FC<Props> = ({ onValidPlate }) => {
               })}
             />
           </MaskedInput>
-          <SubmitButton type="submit">OK</SubmitButton>
+          <SubmitButton type="submit" disabled={disabled}>
+            OK
+          </SubmitButton>
         </Fieldset>
         {errors.licensePlate && <Error>Preencha a placa corretamente</Error>}
       </form>
@@ -101,6 +105,9 @@ const Input = styled.input`
   border: 0;
   padding: 10px 5px;
   background-color: #f4f4f4;
+  &:disabled {
+    color: #cecece;
+  }
 `
 
 const Error = styled.span`
