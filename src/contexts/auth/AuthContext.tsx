@@ -24,10 +24,14 @@ export const AuthContextProvider: FC = ({ children }) => {
   const [user, setUser] = useState<firebase.User>(null)
 
   useEffect(() => {
-    const unsub = firebase.auth().onAuthStateChanged((user) => {
-      log('Auth State Changed')
-      log({ user })
-      setUser(user)
+    const unsub = firebase.auth().onAuthStateChanged((userData) => {
+      if (!userData.email?.endsWith('@lucianoautopecas.com')) {
+        firebase.auth().signOut()
+
+        return
+      }
+
+      setUser(userData)
     })
 
     return unsub

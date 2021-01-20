@@ -12,7 +12,7 @@ const Wrapper = styled.header`
   height: 40px;
   display: flex;
   justify-content: center;
-  padding: 8px;
+  padding: 10px 0 0 0;
 `
 
 export default Header

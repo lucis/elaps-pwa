@@ -4,6 +4,7 @@ import { Router } from '@reach/router'
 
 import LoginPage from '../client-side-pages/Login'
 import CheckInPage from '../client-side-pages/CheckIn'
+import SuccessPage from '../client-side-pages/Success'
 import SEO from '../components/SEO'
 
 const App: FC = () => {
@@ -13,6 +14,7 @@ const App: FC = () => {
       <Router>
         <LoginPage path="/app/login" />
         <CheckInPage path="/app/check-in" />
+        <SuccessPage path="/app/success" />
       </Router>
     </Fragment>
   )

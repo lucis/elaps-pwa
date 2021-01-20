@@ -1,11 +1,11 @@
 import type { FC } from 'react'
 import React from 'react'
 
-const CheckIcon: FC = () => {
+const CheckIcon: FC<{ size: string }> = ({ size }) => {
   return (
     <svg
-      width="16"
-      height="16"
+      width={size}
+      height={size}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 367.805 367.805"
     >

@@ -13,7 +13,7 @@ const CheckInPage: FC<RouteComponentProps> = () => {
   return (
     <>
       <Header>
-        <h1>Nova Entrada</h1>
+        <h2>Nova Entrada</h2>
       </Header>
       <Wrapper>
         <LicensePlateInput disabled={!!validPlate} onValidPlate={setPlate} />

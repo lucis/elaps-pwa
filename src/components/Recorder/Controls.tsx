@@ -34,7 +34,7 @@ const RecorderControls: FC<Props> = ({
         <TimeValue>
           <Value>{recordedDuration || currentDuration}</Value>
           {isRecording && <RecordIcon />}
-          {recordedDuration && <CheckIcon />}
+          {recordedDuration && <CheckIcon size="16" />}
         </TimeValue>
         {recordedDuration && (
           <>
