@@ -15,6 +15,15 @@ const SuccessPage: FC<RouteComponentProps> = () => {
       <Button
         color="blue"
         onClick={() => {
+          navigate('/app/checkins/new')
+        }}
+      >
+        Nova Entrada
+      </Button>
+      <Pad />
+      <Button
+        color="blue"
+        onClick={() => {
           navigate('/app/checkins')
         }}
       >
@@ -36,6 +45,10 @@ const Message = styled.p`
   text-align: center;
   font-size: 20px;
   padding: 30px 0;
+`
+
+const Pad = styled.div`
+  padding: 8px 0;
 `
 
 export default SuccessPage

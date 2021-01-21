@@ -6,7 +6,8 @@ import MaskedInput from 'react-input-mask'
 
 type Props = {
   onValidPlate: (plate: string) => void
-  disabled: boolean
+  mode?: 'search'
+  disabled?: boolean
 }
 
 type Form = {
@@ -26,7 +27,7 @@ const PLATE_MASK = [
   /\d/i,
 ]
 
-const LicensePlateInput: FC<Props> = ({ onValidPlate, disabled }) => {
+const LicensePlateInput: FC<Props> = ({ onValidPlate, disabled, mode }) => {
   const { register, handleSubmit, errors } = useForm()
   const onSubmit = (data: Form) => onValidPlate(data.licensePlate)
 
@@ -42,7 +43,9 @@ const LicensePlateInput: FC<Props> = ({ onValidPlate, disabled }) => {
   return (
     <Wrapper>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Label htmlFor="license-plate">Digite a placa</Label>
+        {mode !== 'search' && (
+          <Label htmlFor="license-plate">Digite a placa</Label>
+        )}
         <Fieldset>
           <MaskedInput
             mask={PLATE_MASK}
@@ -51,6 +54,7 @@ const LicensePlateInput: FC<Props> = ({ onValidPlate, disabled }) => {
             disabled={disabled}
           >
             <Input
+              placeholder={mode === 'search' ? 'busque pela placa' : ''}
               id="license-plate"
               name="licensePlate"
               ref={register({

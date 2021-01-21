@@ -51,7 +51,7 @@ const CheckInForm: FC<RouteComponentProps<Props>> = ({ plate }) => {
             })
             .then(() => {
               setLoading(false)
-              navigate('/app/success')
+              navigate('/app/checkins/success')
             })
         })
         .catch(() => {
