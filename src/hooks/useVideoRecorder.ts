@@ -17,6 +17,7 @@ type Props = {
 
 const useUserMedia: () => Props = () => {
   const [stream, setStream] = useState<MediaStream | null>(null)
+  const [acquired, setAcquired] = useState(false)
   const [recorder, setRecorder] = useState<any>(null)
   const [blob, setBlob] = useState<Blob | null>()
   const [blobDuration, setBlobDuration] = useState<string>('')
@@ -42,28 +43,27 @@ const useUserMedia: () => Props = () => {
       return
     }
 
-    /**
-     * We have this "fail-safe" here to:
-     * - Use rear camera on mobile devices
-     * - Use laptop's  camera when developing
-     */
-    navigator.mediaDevices
-      .getUserMedia({ video: { facingMode: { exact: 'environment' } } })
-      .catch(() => navigator.mediaDevices.getUserMedia({ video: true }))
-      .then((acquiredStream) => {
-        setStream(acquiredStream)
-      })
+    getVideoStream().then((acquiredStream) => {
+      setStream(acquiredStream)
+    })
   }, [])
 
-  const startRecording = useCallback(() => {
+  const startRecording = useCallback(async () => {
     setBlob(null)
     setBlobDuration('')
     timerReset()
+
+    const streamToUse = await Promise.resolve(
+      acquired ? stream : getVideoStream()
+    )
+
+    setStream(streamToUse)
+
     // TODO: Locally create types for PromisesHandler
-    const recorder = new RecordRTC.RecordRTCPromisesHandler(stream, {
+    const recorder = new RecordRTC.RecordRTCPromisesHandler(streamToUse, {
       type: 'video',
       mimeType: 'video/webm;codecs=h264',
-      disableLogs: true
+      disableLogs: true,
     })
 
     setRecorder(recorder)
@@ -77,7 +77,7 @@ const useUserMedia: () => Props = () => {
         log(err)
       }
     )
-  }, [stream, timerReset, timerStart])
+  }, [stream, timerReset, timerStart, acquired])
 
   const stopRecording = useCallback(() => {
     recorder
@@ -86,9 +86,12 @@ const useUserMedia: () => Props = () => {
       .then((resultBlob: Blob) => {
         setBlobDuration(timerString)
         setBlob(resultBlob)
+
+        stream.getVideoTracks()[0].stop()
+        setAcquired(false)
         timerReset()
       })
-  }, [recorder, timerReset, timerString])
+  }, [recorder, timerReset, timerString, stream, setAcquired])
 
   return {
     stream,
@@ -100,6 +103,17 @@ const useUserMedia: () => Props = () => {
     blobDuration,
     error,
   }
+}
+
+/**
+ * We have this "fail-safe" here to:
+ * - Use rear camera on mobile devices
+ * - Use laptop's  camera when developing
+ */
+const getVideoStream = () => {
+  return navigator.mediaDevices
+    .getUserMedia({ video: { facingMode: { exact: 'environment' } } })
+    .catch(() => navigator.mediaDevices.getUserMedia({ video: true }))
 }
 
 export default useUserMedia
