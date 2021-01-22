@@ -24,6 +24,7 @@ module.exports = {
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-no-index`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
