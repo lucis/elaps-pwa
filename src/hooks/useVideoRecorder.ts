@@ -63,6 +63,7 @@ const useUserMedia: () => Props = () => {
     const recorder = new RecordRTC.RecordRTCPromisesHandler(stream, {
       type: 'video',
       mimeType: 'video/webm;codecs=h264',
+      disableLogs: true
     })
 
     setRecorder(recorder)
