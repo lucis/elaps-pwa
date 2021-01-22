@@ -13,6 +13,7 @@ const Wrapper = styled.header`
   display: flex;
   justify-content: center;
   padding: 10px 0 0 0;
+  margin-bottom: 15px;
 `
 
 export default Header

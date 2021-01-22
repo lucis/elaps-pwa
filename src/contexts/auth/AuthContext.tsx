@@ -1,15 +1,15 @@
 import type { FC } from 'react'
-import React, { useState, useEffect, useReducer } from 'react'
-import type { firestore } from 'firebase/app'
+import React, { useState, useEffect } from 'react'
 import firebase from 'firebase/app'
 
 import 'firebase/auth'
 import 'firebase/firestore'
 
-import { log, createCtx } from '../../utils'
+import { createCtx } from '../../utils'
 
 type AuthContext = {
   user: firebase.User
+  loading: boolean
 }
 
 export const [useAuth, AuthStateProvider] = createCtx<AuthContext>()
@@ -22,6 +22,7 @@ export const loginWithGoogle = () => {
 
 export const AuthContextProvider: FC = ({ children }) => {
   const [user, setUser] = useState<firebase.User>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const unsub = firebase.auth().onAuthStateChanged((userData) => {
@@ -32,10 +33,13 @@ export const AuthContextProvider: FC = ({ children }) => {
       }
 
       setUser(userData)
+      setLoading(false)
     })
 
     return unsub
   }, [])
 
-  return <AuthStateProvider value={{ user }}>{children}</AuthStateProvider>
+  return (
+    <AuthStateProvider value={{ user, loading }}>{children}</AuthStateProvider>
+  )
 }

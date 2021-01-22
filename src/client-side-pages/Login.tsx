@@ -6,15 +6,19 @@ import type { RouteComponentProps } from '@reach/router'
 import { loginWithGoogle, useAuth } from '../contexts/auth/AuthContext'
 
 const LoginPage: FC<RouteComponentProps> = () => {
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
 
   useEffect(() => {
+    if (loading) {
+      return
+    }
+
     if (user) {
-      navigate('/app/home')
+      navigate('/app/checkins')
     } else {
       loginWithGoogle()
     }
-  }, [user])
+  }, [user, loading])
 
   return (
     <div className="flex items-center flex-column mt3">
