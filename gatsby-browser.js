@@ -1,6 +1,7 @@
 import React from 'react'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 
 import './src/font.css'
 import { AuthContextProvider } from './src/contexts/auth/AuthContext'

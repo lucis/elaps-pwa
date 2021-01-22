@@ -15,7 +15,7 @@ const App: FC = () => {
       <Router>
         <LoginPage path="/app/login" />
         <AllCheckinsPage path="/app/checkins" />
-        <CheckInPage path="/app/checkins/new" />
+        <CheckInPage path="/app/checkins/add" />
         <SuccessPage path="/app/checkins/success" />
       </Router>
     </Fragment>
