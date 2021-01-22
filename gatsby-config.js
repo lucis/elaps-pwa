@@ -37,5 +37,6 @@ module.exports = {
         icon: `src/images/laps-icon.png`,
       },
     },
+    `gatsby-plugin-offline`,
   ],
 }
