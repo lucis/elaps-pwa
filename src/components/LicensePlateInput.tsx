@@ -1,13 +1,15 @@
 import type { FC } from 'react'
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { styled } from 'linaria/react'
 import { useForm } from 'react-hook-form'
 import MaskedInput from 'react-input-mask'
 
 type Props = {
   onValidPlate: (plate: string) => void
+  resetable?: boolean
   mode?: 'search'
   disabled?: boolean
+  onReset?: () => void
 }
 
 type Form = {
@@ -27,9 +29,25 @@ const PLATE_MASK = [
   /\d/i,
 ]
 
-const LicensePlateInput: FC<Props> = ({ onValidPlate, disabled, mode }) => {
-  const { register, handleSubmit, errors } = useForm()
-  const onSubmit = (data: Form) => onValidPlate(data.licensePlate)
+const LicensePlateInput: FC<Props> = ({
+  onValidPlate,
+  disabled,
+  mode,
+  resetable,
+  ...props
+}) => {
+  const { register, handleSubmit, errors, reset } = useForm({
+    defaultValues: {
+      licensePlate: '',
+    },
+  })
+
+  const [isSet, set] = useState(false)
+
+  const onSubmit = (data: Form) => {
+    onValidPlate(data.licensePlate)
+    set(true)
+  }
 
   const transformUppercase = useCallback(({ nextState }) => {
     const { value: raw } = nextState
@@ -39,6 +57,12 @@ const LicensePlateInput: FC<Props> = ({ onValidPlate, disabled, mode }) => {
       value: raw?.toUpperCase?.() || raw,
     }
   }, [])
+
+  const onReset = useCallback(() => {
+    set(false)
+    reset()
+    props.onReset()
+  }, [reset, props])
 
   return (
     <Wrapper>
@@ -51,7 +75,7 @@ const LicensePlateInput: FC<Props> = ({ onValidPlate, disabled, mode }) => {
             mask={PLATE_MASK}
             alwaysShowMask
             beforeMaskedStateChange={transformUppercase}
-            disabled={disabled}
+            disabled={disabled || (resetable && isSet)}
           >
             <Input
               placeholder={mode === 'search' ? 'busque pela placa' : ''}
@@ -63,9 +87,20 @@ const LicensePlateInput: FC<Props> = ({ onValidPlate, disabled, mode }) => {
               })}
             />
           </MaskedInput>
-          <SubmitButton type="submit" disabled={disabled}>
-            OK
-          </SubmitButton>
+          {resetable && isSet ? (
+            <ResetButton
+              onClick={(e) => {
+                e.preventDefault()
+                onReset()
+              }}
+            >
+              X{' '}
+            </ResetButton>
+          ) : (
+            <SubmitButton type="submit" disabled={disabled}>
+              OK
+            </SubmitButton>
+          )}
         </Fieldset>
         {errors.licensePlate && <Error>Preencha a placa corretamente</Error>}
       </form>
@@ -95,6 +130,15 @@ const Fieldset = styled.div`
 
 const SubmitButton = styled.button`
   background-color: #ccc;
+  color: #333;
+  font-weight: bold;
+  width: 61px;
+  border: 0;
+  font-size: 25px;
+`
+
+const ResetButton = styled.button`
+  background-color: #ffd4d4;
   color: #333;
   font-weight: bold;
   width: 61px;

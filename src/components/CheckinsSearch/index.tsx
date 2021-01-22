@@ -12,6 +12,8 @@ const CheckinsSearch: FC = () => {
   return (
     <Wrapper>
       <LicensePlateInput
+        resetable
+        onReset={() => reset()}
         onValidPlate={(plate) => searchForPlate(plate)}
         mode="search"
       />
