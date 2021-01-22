@@ -22,7 +22,7 @@ const AllCheckinsPage: FC<RouteComponentProps> = () => {
         onClick={() => {
           navigate('/app/checkins/add')
         }}
-        icon={<Plus size={14} />}
+        icon={<Plus size="14" />}
       >
         Adicionar
       </ButtonWithIcon>

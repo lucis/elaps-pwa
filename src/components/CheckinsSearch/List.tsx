@@ -27,6 +27,7 @@ const CheckinsList: FC<Props> = ({ checkins, loading }) => {
 
 const Wrapper = styled.div`
   display: flex;
+  flex-direction: column;
   background-color: #fbfbfb;
   border: 1px solid #e1e1e1;
 `
@@ -67,7 +68,7 @@ const Item = styled.div`
   border-bottom: 1px solid #e1e1e1;
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  flex: 1;
   padding: 10px;
 `
 

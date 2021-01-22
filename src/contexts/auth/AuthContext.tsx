@@ -25,7 +25,7 @@ export const AuthContextProvider: FC = ({ children }) => {
 
   useEffect(() => {
     const unsub = firebase.auth().onAuthStateChanged((userData) => {
-      if (!userData.email?.endsWith('@lucianoautopecas.com')) {
+      if (!userData?.email?.endsWith('@lucianoautopecas.com')) {
         firebase.auth().signOut()
 
         return

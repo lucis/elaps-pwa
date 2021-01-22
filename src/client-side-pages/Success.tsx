@@ -15,7 +15,7 @@ const SuccessPage: FC<RouteComponentProps> = () => {
       <Button
         color="blue"
         onClick={() => {
-          navigate('/app/checkins/new')
+          navigate('/app/checkins/add')
         }}
       >
         Nova Entrada

@@ -2,21 +2,25 @@ import type { FC } from 'react'
 import React from 'react'
 import { styled } from 'linaria/react'
 
-interface Props extends React.HTMLProps<HTMLButtonElement> {
-  color?: 'red' | 'blue'
+interface Props extends React.ComponentPropsWithoutRef<typeof Button> {
   icon: React.ReactNode
 }
 
-const ButtonWithIcon: FC<Props> = ({ color = 'blue', icon, children }) => {
+const ButtonWithIcon: FC<Props> = ({
+  color = 'blue',
+  icon,
+  children,
+  ...rest
+}) => {
   return (
-    <Button color={color}>
+    <Button color={color} {...rest}>
       {icon}
       {children}
     </Button>
   )
 }
 
-const Button = styled.button<{ color: string }>`
+const Button = styled.button<{ color?: string }>`
   padding: 10px 15px;
   font-size: 18px;
   background: ${(props) =>
