@@ -7,11 +7,14 @@ import { useCheckins } from '../../datalayer/checkins'
 import CheckinsList from './List'
 
 const CheckinsSearch: FC = () => {
-  const { checkins, loading } = useCheckins()
+  const { checkins, loading, searchForPlate, reset } = useCheckins()
 
   return (
     <Wrapper>
-      <LicensePlateInput onValidPlate={console.log} mode="search" />
+      <LicensePlateInput
+        onValidPlate={(plate) => searchForPlate(plate)}
+        mode="search"
+      />
       <ListWrapper>
         <CheckinsList checkins={checkins} loading={loading} />
       </ListWrapper>
