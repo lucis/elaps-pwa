@@ -49,6 +49,7 @@ const Wrapper = styled.div`
 const Centered = styled.div`
   display: flex;
   justify-content: center;
+  margin-bottom: 15px;
 `
 
 const Line = styled.div`

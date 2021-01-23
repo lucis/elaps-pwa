@@ -22,6 +22,7 @@ const ButtonWithIcon: FC<Props> = ({
 
 const Button = styled.button<{ color?: string }>`
   padding: 10px 15px;
+  box-shadow: 2px 2px 15px 3px #888888;
   font-size: 18px;
   background: ${(props) =>
     props.disabled

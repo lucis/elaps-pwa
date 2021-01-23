@@ -1,10 +1,10 @@
 import type { FC } from 'react'
 import React, { useMemo } from 'react'
 import { styled } from 'linaria/react'
+import Skeleton from 'react-loading-skeleton'
 
 import VideoIcon from '../ui/VideoIcon'
 import type { Checkin } from '../../typings'
-import Skeleton from './Skeleton'
 
 type Props = {
   checkins: Checkin[]
@@ -15,7 +15,9 @@ const CheckinsList: FC<Props> = ({ checkins, loading }) => {
   return (
     <Wrapper>
       {loading ? (
-        <Skeleton />
+        <SkeletonWrapper>
+          <Skeleton count={10} height={25} />
+        </SkeletonWrapper>
       ) : (
         checkins.map((checkin) => (
           <CheckinItem checkin={checkin} key={checkin.time} />
@@ -70,6 +72,10 @@ const Item = styled.div`
   justify-content: space-between;
   flex: 1;
   padding: 10px;
+`
+
+const SkeletonWrapper = styled.div`
+  padding: 15px;
 `
 
 const FirstColumn = styled.div`

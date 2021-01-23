@@ -18,23 +18,32 @@ const AllCheckinsPage: FC<RouteComponentProps> = () => {
       <Title>Entradas de Veículos</Title>
       <CheckinsSearch />
       <Pad />
-      <ButtonWithIcon
-        onClick={() => {
-          navigate('/app/checkins/add')
-        }}
-        icon={<Plus size="14" />}
-      >
-        Adicionar
-      </ButtonWithIcon>
+      <FAB>
+        <ButtonWithIcon
+          onClick={() => {
+            navigate('/app/checkins/add')
+          }}
+          icon={<Plus size="14" />}
+        >
+          Adicionar
+        </ButtonWithIcon>
+      </FAB>
     </Wrapper>
   )
 }
+
+const FAB = styled.div`
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+`
 
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 80px;
 `
 
 const Title = styled.h2`

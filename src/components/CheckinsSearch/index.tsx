@@ -11,6 +11,7 @@ const CheckinsSearch: FC = () => {
 
   return (
     <Wrapper>
+      <SearchLabel>Buscar por Placa</SearchLabel>
       <LicensePlateInput
         resetable
         onReset={() => reset()}
@@ -34,6 +35,14 @@ const Wrapper = styled.div`
 const ListWrapper = styled.div`
   width: 90%;
   margin-top: 15px;
+`
+
+const SearchLabel = styled.div`
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 10px;
 `
 
 export default CheckinsSearch
