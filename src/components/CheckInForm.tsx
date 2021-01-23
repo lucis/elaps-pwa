@@ -7,7 +7,6 @@ import firebase from 'firebase/app'
 import Loader from 'react-loader-spinner'
 import 'firebase/firestore'
 import 'firebase/storage'
-
 import { v4 as uuidv4 } from 'uuid'
 
 import VistoriaRecorder from './Recorder'
@@ -86,9 +85,11 @@ const CheckInForm: FC<RouteComponentProps<Props>> = ({ plate }) => {
               'Enviar'
             )}
           </Button>
-          {error && <Error>
-            Ocorreu um erro ao enviar. Verifique a internet e tente novamente.
-          </Error>}
+          {error && (
+            <Error>
+              Ocorreu um erro ao enviar. Verifique a internet e tente novamente.
+            </Error>
+          )}
         </ButtonWrapper>
       </Form>
     </Wrapper>
@@ -117,7 +118,7 @@ const ButtonWrapper = styled.div`
 
 const Wrapper = styled.div`
   display: flex;
-  width: 90%
+  width: 90%;
   flex-direction: column;
 `
 
