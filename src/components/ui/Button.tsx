@@ -6,6 +6,7 @@ type Props = {
 
 const Button = styled.button<Props>`
   padding: 10px 20px;
+  min-width: 100px;
   font-size: 18px;
   background: ${(props) =>
     props.disabled

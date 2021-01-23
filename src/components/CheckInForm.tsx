@@ -1,9 +1,10 @@
 import type { FC } from 'react'
-import React, { useCallback, useState, useMemo, useEffect } from 'react'
+import React, { useCallback, useState, useMemo } from 'react'
 import type { RouteComponentProps } from '@reach/router'
 import { navigate } from 'gatsby'
 import { styled } from 'linaria/react'
 import firebase from 'firebase/app'
+import Loader from 'react-loader-spinner'
 import 'firebase/firestore'
 import 'firebase/storage'
 
@@ -29,6 +30,8 @@ const CheckInForm: FC<RouteComponentProps<Props>> = ({ plate }) => {
     (e: React.FormEvent) => {
       e.preventDefault()
       setLoading(true)
+      setError(false)
+
       const storage = firebase.storage()
       const storageRef = storage.ref()
       const fileName = `${uuidv4()}.mkv`
@@ -50,8 +53,8 @@ const CheckInForm: FC<RouteComponentProps<Props>> = ({ plate }) => {
               plate,
             })
             .then(() => {
-              setLoading(false)
               navigate('/app/checkins/success')
+              setLoading(false)
             })
         })
         .catch(() => {
@@ -77,19 +80,39 @@ const CheckInForm: FC<RouteComponentProps<Props>> = ({ plate }) => {
         />
         <ButtonWrapper>
           <Button type="submit" color="blue" disabled={loading}>
-            Enviar
+            {loading ? (
+              <Loader type="Oval" color="#00417E" height={16} width={16} />
+            ) : (
+              'Enviar'
+            )}
           </Button>
+          {error && <Error>
+            Ocorreu um erro ao enviar. Verifique a internet e tente novamente.
+          </Error>}
         </ButtonWrapper>
       </Form>
     </Wrapper>
   )
 }
 
+const Error = styled.div`
+  padding: 10px;
+  margin-top: 20px;
+  text-align: center;
+  width: 100%;
+  background-color: #ffe4e4;
+  font-size: 18px;
+  font-weight: bold;
+  color: #780202;
+`
+
 const ButtonWrapper = styled.div`
   margin: 25px 0;
   display: flex;
+  flex-direction: column;
   width: 100%;
-  justify-content: center;
+  align-items: center;
+  min-height: 100px;
 `
 
 const Wrapper = styled.div`
