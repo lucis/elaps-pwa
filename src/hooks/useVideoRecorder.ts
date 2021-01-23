@@ -46,6 +46,8 @@ const useUserMedia: () => Props = () => {
     getVideoStream().then((acquiredStream) => {
       setStream(acquiredStream)
     })
+
+    // TODO: Unsub from stream
   }, [])
 
   const startRecording = useCallback(async () => {
