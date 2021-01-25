@@ -7,6 +7,8 @@ import CheckInPage from '../client-side-pages/CheckIn'
 import SuccessPage from '../client-side-pages/Success'
 import AllCheckinsPage from '../client-side-pages/AllCheckins'
 import SEO from '../components/SEO'
+import AppShell from '../templates/shell'
+import HistorySearchPage from '../client-side-pages/HistorySearch'
 
 const App: FC = () => {
   return (
@@ -17,6 +19,10 @@ const App: FC = () => {
         <AllCheckinsPage path="/app/checkins" />
         <CheckInPage path="/app/checkins/add" />
         <SuccessPage path="/app/checkins/success" />
+        <AppShell path="app/beta">
+          <HistorySearchPage path="history" />
+          <SuccessPage path="success" />
+        </AppShell>
       </Router>
     </Fragment>
   )

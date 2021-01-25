@@ -7,11 +7,25 @@ module.exports = {
   plugins: [
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-typescript`,
+    {
+      resolve: `gatsby-plugin-less`,
+      options: {
+        lessOptions: {
+          modifyVars: {
+            'component-background': '#F4F4F4',
+            'input-border-color': '#F4F4F4',
+            'primary-color': '#00417E',
+            'layout-body-background': '#FFFFFF',
+          },
+          javascriptEnabled: true,
+        },
+      },
+    },
     `gatsby-plugin-linaria`,
     {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
-        fonts: [`Roboto`],
+        fonts: [`Roboto:wght@300;500;700`],
         display: 'swap',
       },
     },
@@ -38,5 +52,11 @@ module.exports = {
       },
     },
     `gatsby-plugin-offline`,
+    {
+      resolve: 'gatsby-plugin-apollo',
+      options: {
+        uri: 'http://localhost:3000',
+      },
+    },
   ],
 }
