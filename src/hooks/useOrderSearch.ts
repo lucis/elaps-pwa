@@ -1,4 +1,5 @@
-import { useQuery, gql } from '@apollo/client'
+import { useLazyQuery, gql } from '@apollo/client'
+import { useCallback } from 'react'
 
 const query = gql`
   query ordersSearch($data: QueryInput!) {
@@ -18,13 +19,22 @@ const query = gql`
 `
 
 const useOrderSearch = () => {
-  const { data, loading, error } = useQuery(query, {
-    variables: {
-      data: {},
-    },
-  })
+  const [getOrders, { loading, data, error }] = useLazyQuery(query)
 
-  return { data, loading, error }
+  const searchPlate = useCallback(
+    (plate: string) => {
+      getOrders({
+        variables: {
+          data: {
+            query: `plate=${plate}`,
+          },
+        },
+      })
+    },
+    [getOrders]
+  )
+
+  return { data, loading, error, searchPlate }
 }
 
 export default useOrderSearch

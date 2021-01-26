@@ -1,9 +1,11 @@
 import { styled } from 'linaria/react'
 import React, { FC } from 'react'
+
 import OrdersSearchBar from './SearchBar'
 
 type Props = {
   onTerm?: (term: string) => void
+  onReset?: () => void
   disabled?: boolean
   vehicle: {
     model: string
@@ -15,11 +17,12 @@ type Props = {
   }
 }
 
-const OrdersFacets: FC<Props> = ({ onTerm, disabled, vehicle }) => {
+const OrdersFacets: FC<Props> = ({ onTerm, onReset, disabled, vehicle, metadata }) => {
   return (
     <Wrapper>
       <VehicleInfo {...vehicle} />
-      <OrdersSearchBar />
+      <OrdersSearchBar onTerm={onTerm} onReset={onReset} disabled={disabled} />
+      <SearchInfo {...metadata} />
     </Wrapper>
   )
 }
@@ -40,6 +43,38 @@ const VehicleInfo: FC<Props['vehicle']> = ({ model, lastOwner }) => {
     </Line>
   )
 }
+
+const SearchInfo: FC<Props['metadata']> = ({ total, filtered }) => {
+  return (
+    <Centered>
+      <Column>
+        <Filtered>{`${filtered} registros exibidos`}</Filtered>
+        <Total>{`${total} registros encontrados`}</Total>
+      </Column>
+    </Centered>
+  )
+}
+
+const Centered = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+`
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const Filtered = styled.span`
+  font-size: 18px;
+  text-align: center;
+`
+
+const Total = styled.span`
+  font-size: 16px;
+  text-align: center;
+`
 
 const Line = styled.p`
   text-align: center;

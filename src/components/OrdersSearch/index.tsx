@@ -1,16 +1,33 @@
+import React, { useMemo } from 'react'
 import type { FC } from 'react'
-import React from 'react'
 import { styled } from 'linaria/react'
 
-import useOrderSearch from '../../hooks/useOrderSearch'
+import type { Order } from '../../generated/graphql'
 import OrdersList from './OrdersList'
+import OrdersFacets from './Facets'
+import useOrdersFilter from '../../hooks/useOrdersFilter'
 
-const OrdersSearch: FC = () => {
-  const { data, loading } = useOrderSearch()
+const OrdersSearch: FC<{ orders: Order[] }> = ({ orders }) => {
+  const { filtered, filter, reset } = useOrdersFilter(orders)
+
+  const vehicle = useMemo(() => {
+    const [order] = orders
+
+    return {
+      model: order.customerName,
+      lastOwner: order.customerName,
+    }
+  }, [orders])
 
   return (
     <Wrapper>
-      {!loading && <OrdersList orders={data.orders.entities} />}
+      <OrdersFacets
+        metadata={{ total: orders?.length, filtered: filtered?.length }}
+        vehicle={vehicle}
+        onTerm={filter}
+        onReset={reset}
+      />
+      <OrdersList orders={orders} />
     </Wrapper>
   )
 }

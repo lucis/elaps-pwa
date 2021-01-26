@@ -2,18 +2,8 @@ import React, { useMemo } from 'react'
 import type { FC } from 'react'
 import { styled } from 'linaria/react'
 
-import Button from '../../components/ui/Button'
-
-type Order = {
-  id: string
-  customerName: string
-  km: number
-  date: string
-  itemsDescriptor: string
-  items: Array<{
-    name: string
-  }>
-}
+import Button from '../ui/Button'
+import type { Order } from '../../generated/graphql'
 
 type Props = { orders: Order[] }
 

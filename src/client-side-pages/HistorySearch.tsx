@@ -1,4 +1,4 @@
-import type { FC } from 'react'
+import { FC, useCallback } from 'react'
 import React from 'react'
 import type { RouteComponentProps } from '@reach/router'
 import { Layout } from 'antd'
@@ -6,25 +6,36 @@ import { styled } from 'linaria/react'
 
 import LicensePlateInput from '../components/LicensePlateInput'
 import OrdersSearch from '../components/OrdersSearch'
-import OrdersFacets from '../components/OrdersSearch/Facets'
+import useOrderSearch from '../hooks/useOrderSearch'
 
 const { Header } = Layout
 
 const HistorySearchPage: FC<RouteComponentProps> = () => {
+  const { searchPlate, data, loading, error } = useOrderSearch()
+
   return (
     <Layout>
       <GreyHeader>Histório de Veículos</GreyHeader>
       <ContentWithPadding>
-        <OrdersFacets
-          metadata={{ total: 10, filtered: 10 }}
-          vehicle={{ model: 'L200 1994', lastOwner: 'Luciano de Oliveira' }}
+        <LicensePlateInput
+          loading={loading}
+          onValidPlate={(plate) => searchPlate(plate)}
         />
-        <LicensePlateInput onValidPlate={(plate) => console.log(plate)} />
-        <OrdersSearch />
+        <Line />
+        {data?.orders?.entities?.length && (
+          <OrdersSearch orders={data.orders.entities} />
+        )}
       </ContentWithPadding>
     </Layout>
   )
 }
+
+const Line = styled.hr`
+  border: 0;
+  border-top: 1px solid #e1e1e1;
+  margin: 20px 0;
+  width: 100%;
+`
 
 const GreyHeader = styled(Header)`
   background-color: #f4f4f4;
