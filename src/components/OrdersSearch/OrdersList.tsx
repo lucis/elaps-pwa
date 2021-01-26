@@ -50,6 +50,7 @@ const List = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-height: 1000px;
 `
 
 const ItemsDescriptor = styled.span`

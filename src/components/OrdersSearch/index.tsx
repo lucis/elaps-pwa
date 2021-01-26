@@ -25,9 +25,8 @@ const OrdersSearch: FC<{ orders: Order[] }> = ({ orders }) => {
         metadata={{ total: orders?.length, filtered: filtered?.length }}
         vehicle={vehicle}
         onTerm={filter}
-        onReset={reset}
       />
-      <OrdersList orders={orders} />
+      <OrdersList orders={filtered} />
     </Wrapper>
   )
 }

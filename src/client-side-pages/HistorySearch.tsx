@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import React from 'react'
 import type { RouteComponentProps } from '@reach/router'
 import { Layout } from 'antd'
@@ -12,17 +12,28 @@ const { Header } = Layout
 
 const HistorySearchPage: FC<RouteComponentProps> = () => {
   const { searchPlate, data, loading, error } = useOrderSearch()
+  const [isSet, set] = useState(false)
+
+  const onPlate = useCallback(
+    (plate: string) => {
+      searchPlate(plate)
+      set(true)
+    },
+    [searchPlate]
+  )
 
   return (
     <Layout>
       <GreyHeader>Histório de Veículos</GreyHeader>
       <ContentWithPadding>
         <LicensePlateInput
+          resetable
           loading={loading}
-          onValidPlate={(plate) => searchPlate(plate)}
+          onValidPlate={onPlate}
+          onReset={() => set(false)}
         />
         <Line />
-        {data?.orders?.entities?.length && (
+        {data?.orders?.entities?.length && isSet && (
           <OrdersSearch orders={data.orders.entities} />
         )}
       </ContentWithPadding>

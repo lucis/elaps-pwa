@@ -1,11 +1,11 @@
 import { styled } from 'linaria/react'
-import React, { FC } from 'react'
+import React  from 'react'
+import type { FC } from 'react'
 
 import OrdersSearchBar from './SearchBar'
 
 type Props = {
   onTerm?: (term: string) => void
-  onReset?: () => void
   disabled?: boolean
   vehicle: {
     model: string
@@ -17,11 +17,11 @@ type Props = {
   }
 }
 
-const OrdersFacets: FC<Props> = ({ onTerm, onReset, disabled, vehicle, metadata }) => {
+const OrdersFacets: FC<Props> = ({ onTerm, disabled, vehicle, metadata }) => {
   return (
     <Wrapper>
       <VehicleInfo {...vehicle} />
-      <OrdersSearchBar onTerm={onTerm} onReset={onReset} disabled={disabled} />
+      <OrdersSearchBar onTerm={onTerm} disabled={disabled} />
       <SearchInfo {...metadata} />
     </Wrapper>
   )

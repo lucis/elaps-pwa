@@ -9,11 +9,10 @@ import Suggestions from './Suggestions'
 
 type Props = {
   onTerm?: (a: string) => void
-  onReset?: () => void
   disabled?: boolean
 }
 
-const OrdersSearchBar: FC<Props> = ({ onTerm, onReset, disabled }) => {
+const OrdersSearchBar: FC<Props> = ({ onTerm, disabled }) => {
   const [term, setTerm] = useState('')
   const debounced = useDebouncedCallback(onTerm, 1000)
 
@@ -31,6 +30,7 @@ const OrdersSearchBar: FC<Props> = ({ onTerm, onReset, disabled }) => {
         <Label>Busque por peça ou serviço</Label>
         <SearchInput
           disabled={disabled}
+          allowClear
           value={term}
           onChange={(e) => onChangeTerm(e.target.value)}
           placeholder="ex: filtro"
