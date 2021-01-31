@@ -1,5 +1,5 @@
-import { FC, useCallback, useEffect, useState } from 'react'
-import React from 'react'
+import type { FC } from 'react'
+import React, { useCallback, useState } from 'react'
 import type { RouteComponentProps } from '@reach/router'
 import { Layout } from 'antd'
 import { styled } from 'linaria/react'
@@ -33,9 +33,12 @@ const HistorySearchPage: FC<RouteComponentProps> = () => {
           onReset={() => set(false)}
         />
         <Line />
-        {data?.orders?.entities?.length && isSet && (
-          <OrdersSearch orders={data.orders.entities} />
-        )}
+        {isSet &&
+          (!loading && data?.orders?.entities?.length ? (
+            <OrdersSearch orders={data.orders.entities} />
+          ) : (
+            'Nenhum registro encontrado'
+          ))}
       </ContentWithPadding>
     </Layout>
   )

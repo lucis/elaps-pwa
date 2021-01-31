@@ -6,7 +6,12 @@ const query = gql`
     orders(data: $data) {
       entities {
         id
-        customerName
+        vehicle {
+          model
+        }
+        customer {
+          name
+        }
         km
         date
         items {

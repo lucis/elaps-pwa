@@ -19,7 +19,7 @@ const OrdersList: FC<Props> = ({ orders }) => {
 
 const OrderListItem: FC<{ order: Order }> = ({ order }) => {
   const timeLabel = useMemo(() => {
-    const date = new Date(parseInt(order.date, 10))
+    const date = new Date(order.date)
 
     return Intl.DateTimeFormat('pt-BR', {
       dateStyle: 'short',
@@ -32,7 +32,7 @@ const OrderListItem: FC<{ order: Order }> = ({ order }) => {
         <Line>
           <OrderDate>{timeLabel}</OrderDate>
           <OrderField>{`${order.km}km`}</OrderField>
-          <OrderField>{order.customerName}</OrderField>
+          <OrderField>{order.customer.name}</OrderField>
           <OrderField>{`${order.items.length} itens`}</OrderField>
         </Line>
         <Line>
@@ -85,6 +85,7 @@ const OrderItem = styled.div`
 
 const Column = styled.div`
   margin-left: 40px;
+  min-width: 150px;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -8,14 +8,14 @@ import OrdersFacets from './Facets'
 import useOrdersFilter from '../../hooks/useOrdersFilter'
 
 const OrdersSearch: FC<{ orders: Order[] }> = ({ orders }) => {
-  const { filtered, filter, reset } = useOrdersFilter(orders)
+  const { filtered, filter } = useOrdersFilter(orders)
 
   const vehicle = useMemo(() => {
     const [order] = orders
 
     return {
-      model: order.customerName,
-      lastOwner: order.customerName,
+      model: order.vehicle?.model,
+      lastOwner: order.customer?.name,
     }
   }, [orders])
 

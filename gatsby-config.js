@@ -55,7 +55,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-apollo',
       options: {
-        uri: 'http://localhost:3000',
+        uri: 'https://linode.lucianoautopecas.com',
       },
     },
   ],

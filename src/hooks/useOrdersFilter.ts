@@ -11,9 +11,10 @@ const useOrdersFilter = (orders: Order[]) => {
   useEffect(() => {
     const searchTool = new JsSearch.Search('id')
 
+    searchTool.sanitizer = new OrderSanitizer()
+
     searchTool.addIndex('itemsDescriptor')
     searchTool.addDocuments(orders)
-    searchTool.sanitizer = new OrderSanitizer()
     setSearch(searchTool)
   }, [orders, setSearch])
 
