@@ -15,7 +15,7 @@ const LoginPage: FC<RouteComponentProps> = () => {
     }
 
     if (user) {
-      navigate('/app/checkins')
+      navigate('/app/home')
     } else {
       loginWithGoogle()
     }
