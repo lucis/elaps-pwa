@@ -4,6 +4,7 @@ import 'firebase/firestore'
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 
 import './src/font.css'
+import 'antd/dist/antd.less'
 import { AuthContextProvider } from './src/contexts/auth/AuthContext'
 
 const firebaseConfig = {

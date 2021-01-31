@@ -21,3 +21,31 @@ export function createCtx<A extends {} | null>() {
 
   return [useCtx, ctx.Provider] as const // 'as const' makes TypeScript infer a tuple
 }
+
+const accents =
+  'ÀÁÂÃÄÅĄĀāàáâãäåąßÒÓÔÕÕÖØŐòóôőõöøĎďDŽdžÈÉÊËĘèéêëęðÇçČčĆćÐÌÍÎÏĪìíîïīÙÚÛÜŰùűúûüĽĹŁľĺłÑŇŃňñńŔŕŠŚŞšśşŤťŸÝÿýŽŻŹžżźđĢĞģğ'
+
+const accentsOut =
+  'AAAAAAAAaaaaaaaasOOOOOOOOoooooooDdDZdzEEEEEeeeeeeCcCcCcDIIIIIiiiiiUUUUUuuuuuLLLlllNNNnnnRrSSSsssTtYYyyZZZzzzdGGgg'
+
+const accentsMap = new Map()
+
+const indexes = accents.split('').map((_, index) => index)
+
+for (const i in indexes) {
+  const nValue = parseInt(i, 10)
+
+  accentsMap.set(accents.charCodeAt(nValue), accentsOut.charCodeAt(nValue))
+}
+
+export const removeAccents = (str: string) => {
+  const nstr = new Array(str.length)
+  let x
+  let i
+
+  for (i = 0; i < nstr.length; i++) {
+    nstr[i] = accentsMap.get((x = str.charCodeAt(i))) || x
+  }
+
+  return String.fromCharCode.apply(null, nstr)
+}

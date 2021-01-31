@@ -4,3 +4,8 @@ declare namespace Intl {
     timeStyle?: 'full' | 'long' | 'medium' | 'short'
   }
 }
+
+declare module '*.png' {
+  const value: string
+  export = value
+}

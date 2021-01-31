@@ -3,12 +3,14 @@ import React, { useCallback, useState } from 'react'
 import { styled } from 'linaria/react'
 import { useForm } from 'react-hook-form'
 import MaskedInput from 'react-input-mask'
+import { LoadingOutlined } from '@ant-design/icons'
 
 type Props = {
   onValidPlate: (plate: string) => void
   resetable?: boolean
   mode?: 'search'
   disabled?: boolean
+  loading?: boolean
   onReset?: () => void
 }
 
@@ -34,6 +36,7 @@ const LicensePlateInput: FC<Props> = ({
   disabled,
   mode,
   resetable,
+  loading,
   ...props
 }) => {
   const { register, handleSubmit, errors, reset } = useForm({
@@ -98,7 +101,11 @@ const LicensePlateInput: FC<Props> = ({
             </ResetButton>
           ) : (
             <SubmitButton type="submit" disabled={disabled}>
-              OK
+              {loading ? (
+                <LoadingOutlined style={{ fontSize: '18' }} spin />
+              ) : (
+                'OK'
+              )}
             </SubmitButton>
           )}
         </Fieldset>
