@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react'
 import type { FC } from 'react'
-import { styled } from 'linaria/react'
 
 import type { Order } from '../../generated/graphql'
 import OrdersList from './OrdersList'
@@ -20,19 +19,15 @@ const OrdersSearch: FC<{ orders: Order[] }> = ({ orders }) => {
   }, [orders])
 
   return (
-    <Wrapper>
+    <div className="w-9/12">
       <OrdersFacets
         metadata={{ total: orders?.length, filtered: filtered?.length }}
         vehicle={vehicle}
         onTerm={filter}
       />
       <OrdersList orders={filtered} />
-    </Wrapper>
+    </div>
   )
 }
-
-const Wrapper = styled.div`
-  width: 70%;
-`
 
 export default OrdersSearch

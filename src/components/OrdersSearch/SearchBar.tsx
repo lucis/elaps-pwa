@@ -24,56 +24,23 @@ const OrdersSearchBar: FC<Props> = ({ onTerm, disabled }) => {
     [debounced, setTerm]
   )
 
+  // TODO: Add autofocus and prefix on input, and allowClear
+
   return (
-    <Wrapper>
-      <SearchColumn>
-        <Label>Busque por peça ou serviço</Label>
-        <SearchInput
+    <div className="flex justify-center my-3">
+      <div className="flex flex-col">
+        <div className="font-bold uppercase">Busque por peça ou serviço</div>
+        <input
+          className="h-10 bg-cinza p-3"
           disabled={disabled}
-          allowClear
           value={term}
           onChange={(e) => onChangeTerm(e.target.value)}
           placeholder="ex: filtro"
-          // eslint-disable-next-line jsx-a11y/no-autofocus
-          autoFocus
-          size="large"
-          prefix={<SearchOutlined />}
         />
-      </SearchColumn>
+      </div>
       <Suggestions onTerm={(value) => onChangeTerm(value)} />
-    </Wrapper>
+    </div>
   )
 }
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 15px 0 20px 0;
-`
-
-const SearchColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-const BarLine = styled.div`
-  display: flex;
-`
-
-const Tags = styled.div`
-  margin-left: 15px;
-`
-
-const Label = styled.label`
-  text-transform: uppercase;
-  font-weight: bold;
-`
-
-const SearchInput = styled.input`
-  min-width: 200px;
-  height: 40px;
-  background-color: #f4f4f4;
-  padding: 5px;
-`
 
 export default OrdersSearchBar

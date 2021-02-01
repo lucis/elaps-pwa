@@ -21,8 +21,10 @@ const HistorySearchPage: FC<RouteComponentProps> = () => {
 
   return (
     <div className="flex flex-col">
-      <GreyHeader className="py-4">Histórico de Veículos</GreyHeader>
-      <ContentWithPadding>
+      <div className="py-4 bg-cinza text-center font-bold text-xl">
+        Histórico de Veículos
+      </div>
+      <div className="flex flex-col items-center pt-5 w-full">
         <LicensePlateInput
           resetable
           loading={loading}
@@ -38,7 +40,7 @@ const HistorySearchPage: FC<RouteComponentProps> = () => {
           ) : (
             'Nenhum registro encontrado'
           ))}
-      </ContentWithPadding>
+      </div>
     </div>
   )
 }
@@ -47,21 +49,6 @@ const Line = styled.hr`
   border: 0;
   border-top: 1px solid #e1e1e1;
   margin: 20px 0;
-  width: 100%;
-`
-
-const GreyHeader = styled.div`
-  background-color: #f4f4f4;
-  text-align: center;
-  font-weight: bold;
-  font-size: 22px;
-`
-
-const ContentWithPadding = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 15px;
   width: 100%;
 `
 
