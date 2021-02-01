@@ -10,4 +10,19 @@ const onCreatePage = ({ page, actions }) => {
   }
 }
 
-module.exports = { onCreatePage }
+const onCreateWebpackConfig = ({ stage, loaders, actions }) => {
+  if (stage === 'build-html') {
+    actions.setWebpackConfig({
+      module: {
+        rules: [
+          {
+            test: /rc-drawer/,
+            use: loaders.null(),
+          },
+        ],
+      },
+    })
+  }
+}
+
+module.exports = { onCreatePage, onCreateWebpackConfig }

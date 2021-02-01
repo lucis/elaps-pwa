@@ -58,5 +58,6 @@ module.exports = {
         uri: 'https://linode.lucianoautopecas.com',
       },
     },
+    `gatsby-plugin-postcss`,
   ],
 }

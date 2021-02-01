@@ -39,9 +39,7 @@ const OrderListItem: FC<{ order: Order }> = ({ order }) => {
           <ItemsDescriptor>{order.itemsDescriptor}</ItemsDescriptor>
         </Line>
       </Metadata>
-      <Column>
-        <Button color="blue">Ver Completo</Button>
-      </Column>
+      <Column>{/* <Button color="blue">Ver Completo</Button> */}</Column>
     </OrderItem>
   )
 }

@@ -1,6 +1,6 @@
 import { SearchOutlined } from '@ant-design/icons'
 import { useDebouncedCallback } from 'use-debounce'
-import { Input } from 'antd'
+// import { Input } from 'antd'
 import { styled } from 'linaria/react'
 import type { FC } from 'react'
 import React, { useCallback, useState } from 'react'
@@ -69,8 +69,11 @@ const Label = styled.label`
   font-weight: bold;
 `
 
-const SearchInput = styled(Input)`
+const SearchInput = styled.input`
   min-width: 200px;
+  height: 40px;
+  background-color: #f4f4f4;
+  padding: 5px;
 `
 
 export default OrdersSearchBar
