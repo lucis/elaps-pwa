@@ -48,7 +48,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-apollo',
       options: {
-        uri: 'https://linode.lucianoautopecas.com',
+        uri: process.env.ELAPS_BACKEND_API,
       },
     },
     {
