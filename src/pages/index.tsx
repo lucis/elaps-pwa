@@ -6,15 +6,17 @@ import { styled } from 'linaria/react'
 import Logo from '../components/ui/Logo'
 import LoginWithGoogle from '../components/ui/LoginWithGoogle'
 import { useAuth } from '../contexts/auth/AuthContext'
+import useUserSettings from '../hooks/useUserSettings'
 
 const Home: FC = () => {
   const { user, loading } = useAuth()
+  const [config] = useUserSettings()
 
   useEffect(() => {
     if (!loading && user) {
-      navigate('/app/home')
+      navigate(`/app/${config.initialPage ?? 'home'}`)
     }
-  }, [user, loading])
+  }, [user, loading, config])
 
   return (
     <Wrapper>

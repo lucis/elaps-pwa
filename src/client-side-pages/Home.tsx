@@ -4,18 +4,13 @@ import { navigate } from 'gatsby'
 import type { RouteComponentProps } from '@reach/router'
 import { styled } from 'linaria/react'
 
-import Logo from '../components/ui/Logo'
-
 const HomePage: FC<RouteComponentProps> = () => {
   return (
     <Wrapper>
-      <LogoWrapper>
-        <Logo />
-      </LogoWrapper>
       <Menu>
         <LinkButton
           onClick={() => {
-            navigate('/app/beta/history')
+            navigate('/app/history')
           }}
         >
           Histórico de Veículos
@@ -51,25 +46,12 @@ const Menu = styled.div`
   flex-direction: column;
 `
 
-const FAB = styled.div`
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-`
-
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-bottom: 80px;
-`
-
-const LogoWrapper = styled.div`
-  width: 300px;
-  display: flex;
-  justify-content: center;
-  padding: 30px 0 15px 0;
 `
 
 export default HomePage
