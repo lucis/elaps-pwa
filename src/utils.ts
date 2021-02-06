@@ -1,4 +1,10 @@
 import React from 'react'
+import { formatDistance } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+
+export const relativeFromNow = (date: Date) => {
+  return formatDistance(date, Date.now(), { locale: ptBR })
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const log = (...msgs: any) => {
@@ -6,7 +12,7 @@ export const log = (...msgs: any) => {
   if (window?.location?.hostname === 'localhost') console.log(...msgs)
 }
 
-export function createCtx<A extends {} | null>() {
+export function createCtx<A extends Record<string, unknown> | null>() {
   const ctx = React.createContext<A | undefined>(undefined)
 
   function useCtx() {

@@ -1,4 +1,3 @@
-import { styled } from 'linaria/react'
 import React from 'react'
 import type { FC } from 'react'
 
@@ -8,34 +7,18 @@ const TERMS = ['correia', 'oleo', 'filtro de combustivel', 'bomba']
 type Props = { onTerm: (term: string) => void }
 const Suggestions: FC<Props> = ({ onTerm }) => {
   return (
-    <Line>
+    <div className="flex items-end">
       {TERMS.map((term) => (
-        <Item onClick={() => onTerm(term)} key={term}>
+        <button
+          className="mr-4 mb-2 sm:mb-0 bg-lightBlue font-bold text-primary text-sm p-2 border-0 cursor-pointer rounded-lg hover:opacity-70"
+          onClick={() => onTerm(term)}
+          key={term}
+        >
           {term}
-        </Item>
+        </button>
       ))}
-    </Line>
+    </div>
   )
 }
-
-const Line = styled.div`
-  display: flex;
-  align-items: flex-end;
-`
-
-const Item = styled.button`
-  margin: 0px 10px;
-  background: #cfeeff;
-  border-radius: 10px;
-  font-weight: bold;
-  color: #00417e;
-  font-size: 14px;
-  padding: 5px 8px;
-  border: 0;
-  &:hover {
-    opacity: 0.7;
-    cursor: pointer;
-  }
-`
 
 export default Suggestions

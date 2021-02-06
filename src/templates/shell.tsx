@@ -18,9 +18,11 @@ const AppShell: FC<RouteComponentProps> = ({ children }) => {
           style={{ width: '100px' }}
         />
       </div>
-      <div className="site-layout">
+      <div className="">
         <div style={{ overflow: 'initial' }}>{children}</div>
-        <div style={{ textAlign: 'center' }}>Sistema eLAPS ©2021 Por Lucis</div>
+        <div className="bg-white py-3 fixed w-full text-center bottom-0 shadow">
+          Sistema eLAPS ©2021 Por Lucis
+        </div>
       </div>
     </div>
   )

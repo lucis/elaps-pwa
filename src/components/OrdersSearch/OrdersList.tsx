@@ -1,19 +1,18 @@
 import React, { useMemo } from 'react'
 import type { FC } from 'react'
-import { styled } from 'linaria/react'
 
-import Button from '../ui/Button'
+import { relativeFromNow } from '../../utils'
 import type { Order } from '../../generated/graphql'
 
 type Props = { orders: Order[] }
 
 const OrdersList: FC<Props> = ({ orders }) => {
   return (
-    <List>
+    <div className="flex flex-col w-full min-h-screen">
       {orders.map((order) => (
         <OrderListItem order={order} key={order.id} />
       ))}
-    </List>
+    </div>
   )
 }
 
@@ -21,77 +20,31 @@ const OrderListItem: FC<{ order: Order }> = ({ order }) => {
   const timeLabel = useMemo(() => {
     const date = new Date(order.date)
 
-    return Intl.DateTimeFormat('pt-BR', {
-      dateStyle: 'short',
-    }).format(date)
+    return `há ${relativeFromNow(date)} atrás`
   }, [order])
 
   return (
-    <OrderItem>
-      <Metadata>
-        <Line>
-          <OrderDate>{timeLabel}</OrderDate>
-          <OrderField>{`${order.km}km`}</OrderField>
-          <OrderField>{order.customer.name}</OrderField>
-          <OrderField>{`${order.items.length} itens`}</OrderField>
-        </Line>
-        <Line>
-          <ItemsDescriptor>{order.itemsDescriptor}</ItemsDescriptor>
-        </Line>
-      </Metadata>
-      <Column>{/* <Button color="blue">Ver Completo</Button> */}</Column>
-    </OrderItem>
+    <div className="bg-cinza flex flex-col sm:flex-row justify-between mb-4 w-full p-4 sm:p-5 shadow-md">
+      <div className="flex flex-col">
+        <div className="flex items-center w-100 justify-between sm:justify-start">
+          <div className="text-primary font-bold text-lg">{timeLabel}</div>
+          <div className="text-base text-primary px-0 sm:px-3">{`${order.km}km`}</div>
+        </div>
+        <div className="flex items-center">
+          <span
+            className="text-base"
+            dangerouslySetInnerHTML={{ __html: order.itemsDescriptor }}
+          />
+        </div>
+      </div>
+      <div className="flex flex-row sm:flex-col justify-between items-end mt-2 sm:mt-0">
+        <div className="text-base text-gray-500 px-0 sm:px-3">
+          {order.customer.name}
+        </div>
+        <div className="text-base text-gray-500 px-0 sm:px-3">{`${order.items.length} itens`}</div>
+      </div>
+    </div>
   )
 }
-
-const List = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  min-height: 1000px;
-`
-
-const ItemsDescriptor = styled.span`
-  font-size: 18px;
-`
-
-const Line = styled.div`
-  display: flex;
-  align-items: center;
-`
-
-const OrderField = styled.span`
-  font-size: 18px;
-  color: #717171;
-  padding: 0 10px;
-`
-
-const OrderDate = styled.span`
-  color: #717171;
-  font-weight: bold;
-  font-size: 24px;
-`
-
-const OrderItem = styled.div`
-  background-color: #f4f4f4;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-  width: 100%;
-  padding: 15px;
-`
-
-const Column = styled.div`
-  margin-left: 40px;
-  min-width: 150px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`
-
-const Metadata = styled.div`
-  display: flex;
-  flex-direction: column;
-`
 
 export default OrdersList

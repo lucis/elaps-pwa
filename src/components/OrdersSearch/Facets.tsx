@@ -1,5 +1,4 @@
-import { styled } from 'linaria/react'
-import React  from 'react'
+import React from 'react'
 import type { FC } from 'react'
 
 import OrdersSearchBar from './SearchBar'
@@ -19,67 +18,46 @@ type Props = {
 
 const OrdersFacets: FC<Props> = ({ onTerm, disabled, vehicle, metadata }) => {
   return (
-    <Wrapper>
-      <VehicleInfo {...vehicle} />
-      <OrdersSearchBar onTerm={onTerm} disabled={disabled} />
+    <div className="flex flex-col">
+      <div className="flex flex-col sm:flex-row mb-3">
+        <VehicleInfo {...vehicle} />
+        <OrdersSearchBar onTerm={onTerm} disabled={disabled} />
+      </div>
       <SearchInfo {...metadata} />
-    </Wrapper>
+    </div>
   )
 }
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
 const VehicleInfo: FC<Props['vehicle']> = ({ model, lastOwner }) => {
   return (
-    <Line>
-      <b>Carro: </b>
-      <span>{model}</span>
-      <span> - </span>
-      <b>Último proprietário: </b>
-      <span>{lastOwner}</span>
-    </Line>
+    <div className="w-full mr-0 sm:mr-3 sm:w-2/5 flex-col text-base justify-around border border-gray-200 border-solid p-6 mb-4 sm:mb-0">
+      <div className="pb-3">
+        <b>Carro: </b>
+        <span>{model}</span>
+      </div>
+      <div>
+        <b>Último proprietário: </b>
+        <span>{lastOwner}</span>
+      </div>
+    </div>
   )
 }
 
 const SearchInfo: FC<Props['metadata']> = ({ total, filtered }) => {
   return (
-    <Centered>
-      <Column>
-        <Filtered>{`${filtered} registros exibidos`}</Filtered>
-        <Total>{`${total} registros encontrados`}</Total>
-      </Column>
-    </Centered>
+    <div className="flex justify-center mb-4">
+      <div className="flex text-gray-500">
+        <div className="text-center mr-1">
+          <b>Total: </b>
+          {`${total} |`}
+        </div>
+        <div className="text-center">
+          <b>Filtrados: </b>
+          {filtered}
+        </div>
+      </div>
+    </div>
   )
 }
-
-const Centered = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-`
-
-const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-const Filtered = styled.span`
-  font-size: 18px;
-  text-align: center;
-`
-
-const Total = styled.span`
-  font-size: 16px;
-  text-align: center;
-`
-
-const Line = styled.p`
-  text-align: center;
-  font-size: 16px;
-  margin: 10px 0;
-`
 
 export default OrdersFacets
