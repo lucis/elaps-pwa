@@ -10,7 +10,7 @@ const Suggestions: FC<Props> = ({ onTerm }) => {
     <div className="flex items-end">
       {TERMS.map((term) => (
         <button
-          className="mx-2 bg-lightBlue font-bold text-primary text-sm p-2 border-0 cursor-pointer rounded-lg hover:opacity-70"
+          className="mr-4 mb-2 sm:mb-0 bg-lightBlue font-bold text-primary text-sm p-2 border-0 cursor-pointer rounded-lg hover:opacity-70"
           onClick={() => onTerm(term)}
           key={term}
         >

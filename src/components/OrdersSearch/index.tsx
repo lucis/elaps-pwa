@@ -19,7 +19,7 @@ const OrdersSearch: FC<{ orders: Order[] }> = ({ orders }) => {
   }, [orders])
 
   return (
-    <div className="w-9/12">
+    <div className="w-11/12 sm:w-9/12">
       <OrdersFacets
         metadata={{ total: orders?.length, filtered: filtered?.length }}
         vehicle={vehicle}

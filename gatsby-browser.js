@@ -1,7 +1,14 @@
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
+import '@fontsource/roboto'
+import '@fontsource/roboto/400-italic.css'
+import '@fontsource/roboto/700.css'
+import '@fontsource/roboto/900.css'
+import { ConfigProvider } from 'antd'
+import ptBR from 'antd/es/locale/pt_BR'
 
 import './src/font.css'
 import 'antd/dist/antd.less'
@@ -23,5 +30,9 @@ if (!firebase.apps.length) {
 }
 
 export const wrapRootElement = ({ element }) => {
-  return <AuthContextProvider>{element}</AuthContextProvider>
+  return (
+    <ConfigProvider locale={ptBR}>
+      <AuthContextProvider>{element}</AuthContextProvider>
+    </ConfigProvider>
+  )
 }

@@ -23,13 +23,6 @@ module.exports = {
     },
     `gatsby-plugin-linaria`,
     {
-      resolve: `gatsby-plugin-google-fonts`,
-      options: {
-        fonts: [`Roboto:wght@300;500;700`],
-        display: 'swap',
-      },
-    },
-    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
@@ -57,6 +50,12 @@ module.exports = {
       options: {
         // uri: 'https://linode.lucianoautopecas.com',
         uri: 'http://localhost:3000',
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-antd',
+      options: {
+        style: true,
       },
     },
     `gatsby-plugin-postcss`,

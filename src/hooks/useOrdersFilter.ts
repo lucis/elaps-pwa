@@ -7,6 +7,10 @@ import { removeAccents } from '../utils'
 const useOrdersFilter = (orders: Order[]) => {
   const [filtered, setFiltered] = useState(orders)
   const [search, setSearch] = useState<JsSearch.Search | null>(null)
+  const [
+    highlighter,
+    setHighlighter,
+  ] = useState<JsSearch.TokenHighlighter | null>(null)
 
   useEffect(() => {
     const searchTool = new JsSearch.Search('id')
@@ -16,6 +20,14 @@ const useOrdersFilter = (orders: Order[]) => {
     searchTool.addIndex('itemsDescriptor')
     searchTool.addDocuments(orders)
     setSearch(searchTool)
+
+    const tokenHighlighter = new JsSearch.TokenHighlighter(
+      new JsSearch.PrefixIndexStrategy(),
+      new OrderSanitizer(),
+      'b'
+    )
+
+    setHighlighter(tokenHighlighter)
   }, [orders, setSearch])
 
   const filter = useCallback(
@@ -28,9 +40,14 @@ const useOrdersFilter = (orders: Order[]) => {
 
       const result = search.search(term) as Order[]
 
-      setFiltered(result)
+      setFiltered(
+        result.map(({ itemsDescriptor, ...rest }) => ({
+          itemsDescriptor: highlighter.highlight(itemsDescriptor, [term]),
+          ...rest,
+        }))
+      )
     },
-    [setFiltered, search, orders]
+    [setFiltered, search, orders, highlighter]
   )
 
   return {

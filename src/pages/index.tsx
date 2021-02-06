@@ -1,12 +1,21 @@
+import React, { useEffect } from 'react'
 import type { FC } from 'react'
 import { navigate } from 'gatsby'
-import React from 'react'
 import { styled } from 'linaria/react'
 
 import Logo from '../components/ui/Logo'
 import LoginWithGoogle from '../components/ui/LoginWithGoogle'
+import { useAuth } from '../contexts/auth/AuthContext'
 
 const Home: FC = () => {
+  const { user, loading } = useAuth()
+
+  useEffect(() => {
+    if (!loading && user) {
+      navigate('/app/home')
+    }
+  }, [user, loading])
+
   return (
     <Wrapper>
       <LogoWrapper>

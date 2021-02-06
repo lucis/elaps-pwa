@@ -35,7 +35,6 @@ const HomePage: FC<RouteComponentProps> = () => {
 const LinkButton = styled.button`
   width: 250px;
   font-size: 22px;
-  font-weight: bold;
   background-color: #00417e;
   color: #fff;
   padding: 20px;
@@ -64,17 +63,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   padding-bottom: 80px;
-`
-
-const Title = styled.h2`
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
-  padding: 10px 0;
-`
-
-const Pad = styled.div`
-  padding: 8px 0;
 `
 
 const LogoWrapper = styled.div`
