@@ -11,12 +11,15 @@ import { v4 as uuidv4 } from 'uuid'
 
 import VistoriaRecorder from './Recorder'
 import Button from './ui/Button'
+import type { Vehicle } from '../generated/graphql'
+import { sanitizeForFirebase } from '../utils'
 
 type Props = {
   plate: string
+  vehicle: Vehicle
 }
 
-const CheckInForm: FC<RouteComponentProps<Props>> = ({ plate }) => {
+const CheckInForm: FC<RouteComponentProps<Props>> = ({ plate, vehicle }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const [info, setInfo] = useState('')
@@ -45,12 +48,16 @@ const CheckInForm: FC<RouteComponentProps<Props>> = ({ plate }) => {
 
           return db
             .collection('checkins')
-            .add({
-              time: Date.now(),
-              info: info?.length ? info : '',
-              videoURL: url,
-              plate,
-            })
+            .add(
+              sanitizeForFirebase({
+                time: Date.now(),
+                info: info?.length ? info : '',
+                videoURL: url,
+                plate,
+                model: vehicle?.model,
+                ownerName: vehicle?.owner?.name,
+              })
+            )
             .then(() => {
               navigate('/app/checkins/success')
               setLoading(false)
@@ -61,7 +68,7 @@ const CheckInForm: FC<RouteComponentProps<Props>> = ({ plate }) => {
           setError(true)
         })
     },
-    [info, plate, video]
+    [info, plate, video, vehicle]
   )
 
   return (

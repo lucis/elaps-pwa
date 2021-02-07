@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useState } from 'react'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import { useApolloClient } from '@apollo/client'
 
 export const useCheckins = () => {
   const [loading, setLoading] = useState(true)
   const [checkins, setCheckins] = useState([])
   const [allCheckins, setAll] = useState([])
+  const client = useApolloClient()
 
   useEffect(() => {
     getCheckins()
@@ -16,7 +18,7 @@ export const useCheckins = () => {
       .finally(() => {
         setLoading(false)
       })
-  }, [])
+  }, [client])
 
   const searchForPlate = useCallback(
     (validPlate: string) => {
@@ -53,7 +55,7 @@ const getCheckins = (a?: string, b?: '==', c?: string) => {
   const query = a ? base.where(a, b, c) : base
 
   return query.get().then((snapshot) => {
-    const entities = snapshot.docs.map((doc) => doc.data())
+    const entities = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
 
     return entities
   })

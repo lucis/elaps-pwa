@@ -1,0 +1,11 @@
+  query getVehicles($data: QueryInput!) {
+    vehicles(data: $data) {
+      entities {
+        plate
+        model
+        owner {
+          name
+        }
+      }
+    }
+  }

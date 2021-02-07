@@ -2,6 +2,7 @@ export type Checkin = {
   plate: string
   time: number
   info?: string
-  carLabel?: string
+  model?: string
+  ownerName?: string
   videoURL: string
 }

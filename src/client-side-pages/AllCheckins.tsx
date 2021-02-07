@@ -3,9 +3,9 @@ import React from 'react'
 import { navigate } from 'gatsby'
 import type { RouteComponentProps } from '@reach/router'
 import { styled } from 'linaria/react'
+import { Button } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 
-import ButtonWithIcon from '../components/ui/ButtonWithIcon'
-import Plus from '../components/ui/PlusIcon'
 import CheckinsSearch from '../components/CheckinsSearch'
 
 const AllCheckinsPage: FC<RouteComponentProps> = () => {
@@ -15,14 +15,17 @@ const AllCheckinsPage: FC<RouteComponentProps> = () => {
       <CheckinsSearch />
       <Pad />
       <FAB>
-        <ButtonWithIcon
+        <Button
+          icon={<PlusOutlined />}
+          type="primary"
           onClick={() => {
             navigate('/app/checkins/add')
           }}
-          icon={<Plus size="14" />}
+          size="large"
+          className="rounded-lg"
         >
           Adicionar
-        </ButtonWithIcon>
+        </Button>
       </FAB>
     </Wrapper>
   )
@@ -30,7 +33,7 @@ const AllCheckinsPage: FC<RouteComponentProps> = () => {
 
 const FAB = styled.div`
   position: fixed;
-  bottom: 40px;
+  bottom: 60px;
   right: 20px;
 `
 

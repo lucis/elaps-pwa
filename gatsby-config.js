@@ -1,3 +1,7 @@
+require('dotenv').config({
+  path: `.env.development`,
+})
+
 module.exports = {
   siteMetadata: {
     title: `eLaps`,
@@ -58,5 +62,6 @@ module.exports = {
       },
     },
     `gatsby-plugin-postcss`,
+    `gatsby-plugin-graphql-loader`,
   ],
 }

@@ -47,7 +47,7 @@ const CheckinItem: FC<{ checkin: Checkin }> = ({ checkin }) => {
   return (
     <Item>
       <FirstColumn>
-        <CarLabel>{checkin?.carLabel ?? '(veículo não identificado)'}</CarLabel>
+        <CarLabel>{checkin?.model ?? '(veículo não identificado)'}</CarLabel>
         <Line>
           <CarPlate>{checkin.plate}</CarPlate>
           <Timestamp>{timeLabel}</Timestamp>
