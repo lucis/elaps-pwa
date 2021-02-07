@@ -7656,13 +7656,6 @@ gatsby-plugin-antd@^2.2.0:
     antd "^4.0.0"
     babel-plugin-import "^1.13.0"
 
-gatsby-plugin-apollo@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-apollo/-/gatsby-plugin-apollo-3.0.2.tgz#4a4eca8f475a083cbf6cec4bf99357232506cbd4"
-  integrity sha512-TZLc1FRsbw2TNlQ73EpAyfi9ee6i9rSUCcA1GzP/eWV/5XEGrhzMpWjMm8rbyXvQ9yHCRj0U+tZe9YGdlSv/kQ==
-  dependencies:
-    isomorphic-fetch "^3.0.0"
-
 gatsby-plugin-graphql-loader@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-graphql-loader/-/gatsby-plugin-graphql-loader-1.0.2.tgz#5efc4fd511fd62fb1b2e52df3b00e1e6c18b9852"

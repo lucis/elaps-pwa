@@ -16,6 +16,7 @@ import {
   createHttpLink,
 } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
+import fetch from 'isomorphic-fetch'
 
 import './src/font.css'
 import 'antd/dist/antd.less'
