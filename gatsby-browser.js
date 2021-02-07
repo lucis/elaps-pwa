@@ -9,6 +9,13 @@ import '@fontsource/roboto/700.css'
 import '@fontsource/roboto/900.css'
 import { ConfigProvider } from 'antd'
 import ptBR from 'antd/es/locale/pt_BR'
+import {
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  createHttpLink,
+} from '@apollo/client'
+import { setContext } from '@apollo/client/link/context'
 
 import './src/font.css'
 import 'antd/dist/antd.less'
@@ -29,10 +36,40 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 }
 
+const cache = new InMemoryCache()
+
 export const wrapRootElement = ({ element }) => {
+  const httpLink = createHttpLink({
+    uri: process.env.GATSBY_BACKEND_API,
+  })
+
+  const authLink = setContext((_, { headers }) => {
+    try {
+      const token = localStorage.getItem('token')
+
+      return {
+        headers: {
+          ...headers,
+          test: 'true',
+          authorization: token || '',
+        },
+      }
+    } catch {
+      return {}
+    }
+  })
+
+  const client = new ApolloClient({
+    fetch,
+    link: authLink.concat(httpLink),
+    cache,
+  })
+
   return (
     <ConfigProvider locale={ptBR}>
-      <AuthContextProvider>{element}</AuthContextProvider>
+      <AuthContextProvider>
+        <ApolloProvider client={client}>{element}</ApolloProvider>
+      </AuthContextProvider>
     </ConfigProvider>
   )
 }

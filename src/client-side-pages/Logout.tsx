@@ -13,6 +13,7 @@ const LogoutPage: FC<RouteComponentProps> = () => {
       .signOut()
       .then(() => {
         navigate('/')
+        localStorage.removeItem('token')
       })
   }, [])
 

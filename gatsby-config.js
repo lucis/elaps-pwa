@@ -50,12 +50,6 @@ module.exports = {
     },
     `gatsby-plugin-offline`,
     {
-      resolve: 'gatsby-plugin-apollo',
-      options: {
-        uri: process.env.ELAPS_BACKEND_API,
-      },
-    },
-    {
       resolve: 'gatsby-plugin-antd',
       options: {
         style: true,
