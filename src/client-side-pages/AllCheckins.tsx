@@ -3,30 +3,29 @@ import React from 'react'
 import { navigate } from 'gatsby'
 import type { RouteComponentProps } from '@reach/router'
 import { styled } from 'linaria/react'
+import { Button } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 
-import ButtonWithIcon from '../components/ui/ButtonWithIcon'
-import Plus from '../components/ui/PlusIcon'
-import Logo from '../components/ui/Logo'
 import CheckinsSearch from '../components/CheckinsSearch'
 
 const AllCheckinsPage: FC<RouteComponentProps> = () => {
   return (
     <Wrapper>
-      <LogoWrapper>
-        <Logo />
-      </LogoWrapper>
       <Title>Entradas de Veículos</Title>
       <CheckinsSearch />
       <Pad />
       <FAB>
-        <ButtonWithIcon
+        <Button
+          icon={<PlusOutlined />}
+          type="primary"
           onClick={() => {
             navigate('/app/checkins/add')
           }}
-          icon={<Plus size="14" />}
+          size="large"
+          className="rounded-lg"
         >
           Adicionar
-        </ButtonWithIcon>
+        </Button>
       </FAB>
     </Wrapper>
   )
@@ -34,7 +33,7 @@ const AllCheckinsPage: FC<RouteComponentProps> = () => {
 
 const FAB = styled.div`
   position: fixed;
-  bottom: 20px;
+  bottom: 60px;
   right: 20px;
 `
 
@@ -55,13 +54,6 @@ const Title = styled.h2`
 
 const Pad = styled.div`
   padding: 8px 0;
-`
-
-const LogoWrapper = styled.div`
-  width: 300px;
-  display: flex;
-  justify-content: center;
-  padding: 30px 0 15px 0;
 `
 
 export default AllCheckinsPage

@@ -26,6 +26,9 @@ export const AuthContextProvider: FC = ({ children }) => {
 
   useEffect(() => {
     const unsub = firebase.auth().onAuthStateChanged((userData) => {
+      userData?.getIdToken(false)?.then((token) => {
+        localStorage.setItem('token', token)
+      })
       setUser(userData)
       setLoading(false)
     })

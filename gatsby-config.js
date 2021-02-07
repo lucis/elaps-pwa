@@ -1,3 +1,7 @@
+require('dotenv').config({
+  path: `.env.development`,
+})
+
 module.exports = {
   siteMetadata: {
     title: `eLaps`,
@@ -46,17 +50,12 @@ module.exports = {
     },
     `gatsby-plugin-offline`,
     {
-      resolve: 'gatsby-plugin-apollo',
-      options: {
-        uri: process.env.ELAPS_BACKEND_API,
-      },
-    },
-    {
       resolve: 'gatsby-plugin-antd',
       options: {
         style: true,
       },
     },
     `gatsby-plugin-postcss`,
+    `gatsby-plugin-graphql-loader`,
   ],
 }

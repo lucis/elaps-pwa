@@ -62,10 +62,11 @@ const LicensePlateInput: FC<Props> = ({
   }, [])
 
   const onReset = useCallback(() => {
+    onValidPlate('')
     set(false)
     reset()
-    props.onReset()
-  }, [reset, props])
+    props.onReset?.()
+  }, [reset, props, onValidPlate])
 
   return (
     <Wrapper>

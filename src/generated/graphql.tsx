@@ -160,9 +160,14 @@ export type Phones = {
 export type Query = {
   __typename?: 'Query'
   orders?: Maybe<Orders>
+  vehicles?: Maybe<Vehicles>
 }
 
 export type QueryOrdersArgs = {
+  data: QueryInput
+}
+
+export type QueryVehiclesArgs = {
   data: QueryInput
 }
 
