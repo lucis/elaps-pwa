@@ -13,7 +13,7 @@ export const useCheckins = () => {
     getCheckins()
       .then((entities) => {
         setCheckins(entities)
-        setAll(entities)
+        setAll(JSON.parse(JSON.stringify(entities)))
       })
       .finally(() => {
         setLoading(false)

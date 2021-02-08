@@ -28,8 +28,7 @@ const HistorySearchPage: FC<RouteComponentProps> = () => {
         <LicensePlateInput
           resetable
           loading={loading}
-          onValidPlate={onPlate}
-          onReset={() => set(false)}
+          onValidPlate={(plate) => (plate ? onPlate(plate) : set(false))}
         />
         <Line />
         {isSet &&

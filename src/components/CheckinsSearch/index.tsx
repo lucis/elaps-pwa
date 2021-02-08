@@ -14,8 +14,7 @@ const CheckinsSearch: FC = () => {
       <SearchLabel>Buscar por Placa</SearchLabel>
       <LicensePlateInput
         resetable
-        onReset={() => reset()}
-        onValidPlate={(plate) => searchForPlate(plate)}
+        onValidPlate={(plate) => (plate ? searchForPlate(plate) : reset())}
         mode="search"
       />
       <ListWrapper>
