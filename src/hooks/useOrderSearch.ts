@@ -8,6 +8,7 @@ const query = gql`
         id
         vehicle {
           model
+          plate
         }
         customer {
           name
@@ -16,6 +17,7 @@ const query = gql`
         date
         items {
           name
+          qty
         }
         itemsDescriptor
       }
