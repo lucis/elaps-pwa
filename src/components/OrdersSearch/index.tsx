@@ -1,12 +1,13 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, Suspense } from 'react'
 import type { FC } from 'react'
-import { Modal } from 'antd'
 
 import type { Order } from '../../generated/graphql'
 import OrdersList from './OrdersList'
 import OrdersFacets from './Facets'
 import useOrdersFilter from '../../hooks/useOrdersFilter'
 import OrderDetail from '../orders/OrderDetail'
+
+const Modal = React.lazy(() => import('antd/lib/Modal'))
 
 const OrdersSearch: FC<{ orders: Order[] }> = ({ orders }) => {
   const { filtered, filter } = useOrdersFilter(orders)
@@ -29,14 +30,16 @@ const OrdersSearch: FC<{ orders: Order[] }> = ({ orders }) => {
         onTerm={filter}
       />
       <OrdersList orders={filtered} onSelect={setOrder} />
-      <Modal
-        visible={!!selectedOrder}
-        destroyOnClose
-        footer={null}
-        onCancel={() => setOrder(null)}
-      >
-        <OrderDetail order={selectedOrder} />
-      </Modal>
+      <Suspense fallback={null}>
+        <Modal
+          visible={!!selectedOrder}
+          destroyOnClose
+          footer={null}
+          onCancel={() => setOrder(null)}
+        >
+          <OrderDetail order={selectedOrder} />
+        </Modal>
+      </Suspense>
     </div>
   )
 }

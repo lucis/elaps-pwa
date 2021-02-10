@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, Fragment } from 'react'
 import type { FC } from 'react'
 import { Descriptions } from 'antd'
 
@@ -30,11 +30,11 @@ const OrderDetail: FC<{ order: Order }> = ({ order }) => {
           {order.vehicle.plate}
         </Descriptions.Item>
         <Descriptions.Item label="Itens">
-          {order.items.map(({ name, qty }) => (
-            <>
+          {order.items.map(({ name, qty }, i) => (
+            <Fragment key={i}>
               <span>{`${parseInt(`${qty || 0}`, 10)} x ${name}`}</span>
               <br />
-            </>
+            </Fragment>
           ))}
         </Descriptions.Item>
       </Descriptions>
