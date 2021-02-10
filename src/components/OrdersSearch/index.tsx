@@ -7,7 +7,19 @@ import OrdersFacets from './Facets'
 import useOrdersFilter from '../../hooks/useOrdersFilter'
 import OrderDetail from '../orders/OrderDetail'
 
-const Modal = React.lazy(() => import('antd/lib/Modal'))
+function lazyImport<
+  T extends React.ComponentType<any>,
+  I extends { [K2 in K]: T },
+  K extends keyof I
+>(factory: () => Promise<I>, name: K): I {
+  return Object.create({
+    [name]: React.lazy(() =>
+      factory().then((module) => ({ default: module[name] }))
+    ),
+  })
+}
+
+const { Modal } = lazyImport(() => import('antd'), 'Modal')
 
 const OrdersSearch: FC<{ orders: Order[] }> = ({ orders }) => {
   const { filtered, filter } = useOrdersFilter(orders)
