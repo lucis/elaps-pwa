@@ -10,7 +10,7 @@ const onCreatePage = ({ page, actions }) => {
   }
 }
 
-const onCreateWebpackConfig = ({ stage, loaders, actions }) => {
+const onCreateWebpackConfig = ({ stage, loaders, actions, getConfig }) => {
   if (stage === 'build-html') {
     actions.setWebpackConfig({
       module: {
@@ -21,6 +21,20 @@ const onCreateWebpackConfig = ({ stage, loaders, actions }) => {
           },
         ],
       },
+      externals: getConfig().externals.concat((_context, request, callback) => {
+        // Exclude bundling firebase* and react-firebase*
+        // These are instead required at runtime.
+        if (
+          /^@?(react-)?firebase(.*)/.test(request) ||
+          /^@?@firebase(.*)/.test(request)
+        ) {
+          console.log(`Excluding bundling of: ${request}`)
+
+          return callback(null, `umd ${request}`)
+        }
+
+        callback(undefined, undefined)
+      }),
     })
   }
 }

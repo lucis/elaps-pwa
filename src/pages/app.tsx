@@ -12,6 +12,7 @@ import AppShell from '../templates/shell'
 import HistorySearchPage from '../client-side-pages/HistorySearch'
 import HomePage from '../client-side-pages/Home'
 import UserSettingsPage from '../client-side-pages/UserSettings'
+import AddCheckInPage from '../client-side-pages/AddCheckin'
 
 const App: FC = () => {
   return (
@@ -27,6 +28,7 @@ const App: FC = () => {
           <HomePage path="home" />
           <HistorySearchPage path="history" />
           <UserSettingsPage path="settings" />
+          <AddCheckInPage path="checkin" />
         </AppShell>
       </Router>
     </Fragment>

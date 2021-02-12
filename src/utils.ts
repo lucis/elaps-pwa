@@ -12,7 +12,7 @@ export const log = (...msgs: any) => {
   if (window?.location?.hostname === 'localhost') console.log(...msgs)
 }
 
-export function createCtx<A extends Record<string, unknown> | null>() {
+export function createCtx<A extends unknown | null>() {
   const ctx = React.createContext<A | undefined>(undefined)
 
   function useCtx() {

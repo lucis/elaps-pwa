@@ -101,7 +101,11 @@ const LicensePlateInput: FC<Props> = ({
               X{' '}
             </ResetButton>
           ) : (
-            <SubmitButton type="submit" disabled={disabled}>
+            <SubmitButton
+              type="submit"
+              disabled={disabled}
+              className="bg-primary text-white"
+            >
               {loading ? (
                 <LoadingOutlined style={{ fontSize: '18' }} spin />
               ) : (
@@ -136,8 +140,6 @@ const Fieldset = styled.div`
 `
 
 const SubmitButton = styled.button`
-  background-color: #ccc;
-  color: #333;
   font-weight: bold;
   width: 61px;
   border: 0;

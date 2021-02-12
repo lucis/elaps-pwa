@@ -6,3 +6,5 @@ export type Checkin = {
   ownerName?: string
   videoURL: string
 }
+
+export type Action<K, V = void> = V extends void ? { type: K } : { type: K } & V
