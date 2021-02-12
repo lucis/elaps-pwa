@@ -46,15 +46,6 @@ const Menu = styled.div`
   flex-direction: column;
 `
 
-<<<<<<< Updated upstream
-=======
-const FAB = styled.div`
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-`
-
->>>>>>> Stashed changes
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
@@ -63,25 +54,4 @@ const Wrapper = styled.div`
   padding-bottom: 80px;
 `
 
-<<<<<<< Updated upstream
-=======
-const Title = styled.h2`
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
-  padding: 10px 0;
-`
-
-const Pad = styled.div`
-  padding: 8px 0;
-`
-
-const LogoWrapper = styled.div`
-  width: 300px;
-  display: flex;
-  justify-content: center;
-  padding: 30px 0 15px 0;
-`
-
->>>>>>> Stashed changes
 export default HomePage
