@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client'
+import * as Apollo from '@apollo/client'
 
 export type Maybe<T> = T | null
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -42,6 +43,8 @@ export type Customer = {
   avatar?: Maybe<Scalars['String']>
   vehicles?: Maybe<Array<Maybe<Vehicle>>>
   orders?: Maybe<Array<Maybe<Order>>>
+  lastOrderDate?: Maybe<Scalars['String']>
+  ordersCount?: Maybe<Scalars['Int']>
 }
 
 export type CustomerInput = {
@@ -81,6 +84,7 @@ export type Mutation = {
   updateVehicle?: Maybe<Vehicle>
   addPart?: Maybe<Part>
   updatePart?: Maybe<Part>
+  fullIndex?: Maybe<Scalars['Boolean']>
 }
 
 export type MutationAddCustomerArgs = {
@@ -161,6 +165,7 @@ export type Query = {
   __typename?: 'Query'
   orders?: Maybe<Orders>
   vehicles?: Maybe<Vehicles>
+  customers?: Maybe<Customers>
 }
 
 export type QueryOrdersArgs = {
@@ -168,6 +173,10 @@ export type QueryOrdersArgs = {
 }
 
 export type QueryVehiclesArgs = {
+  data: QueryInput
+}
+
+export type QueryCustomersArgs = {
   data: QueryInput
 }
 
@@ -217,3 +226,212 @@ export type Vehicles = {
   entities?: Maybe<Array<Maybe<Vehicle>>>
   metadata?: Maybe<QueryMetadata>
 }
+
+export type GetVehiclesQueryVariables = Exact<{
+  data: QueryInput
+}>
+
+export type GetVehiclesQuery = { __typename?: 'Query' } & {
+  vehicles?: Maybe<
+    { __typename?: 'Vehicles' } & {
+      entities?: Maybe<
+        Array<
+          Maybe<
+            { __typename?: 'Vehicle' } & Pick<Vehicle, 'plate' | 'model'> & {
+                owner?: Maybe<
+                  { __typename?: 'Customer' } & Pick<Customer, 'name'>
+                >
+              }
+          >
+        >
+      >
+    }
+  >
+}
+
+export type PlateSearchQueryVariables = Exact<{
+  data: QueryInput
+}>
+
+export type PlateSearchQuery = { __typename?: 'Query' } & {
+  vehicles?: Maybe<
+    { __typename?: 'Vehicles' } & {
+      entities?: Maybe<
+        Array<
+          Maybe<{ __typename?: 'Vehicle' } & Pick<Vehicle, 'model' | 'plate'>>
+        >
+      >
+    }
+  >
+  customers?: Maybe<
+    { __typename?: 'Customers' } & {
+      entities?: Maybe<
+        Array<
+          Maybe<
+            { __typename?: 'Customer' } & Pick<
+              Customer,
+              'name' | 'document' | 'email' | 'ordersCount' | 'lastOrderDate'
+            > & {
+                address?: Maybe<
+                  { __typename?: 'Address' } & Pick<
+                    Address,
+                    | 'street'
+                    | 'number'
+                    | 'postalCode'
+                    | 'city'
+                    | 'state'
+                    | 'neighborhood'
+                    | 'complement'
+                  >
+                >
+                phones?: Maybe<{ __typename?: 'Phones' } & Pick<Phones, 'main'>>
+              }
+          >
+        >
+      >
+    }
+  >
+}
+
+export const GetVehiclesDocument = gql`
+  query getVehicles($data: QueryInput!) {
+    vehicles(data: $data) {
+      entities {
+        plate
+        model
+        owner {
+          name
+        }
+      }
+    }
+  }
+`
+
+/**
+ * __useGetVehiclesQuery__
+ *
+ * To run a query within a React component, call `useGetVehiclesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetVehiclesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetVehiclesQuery({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useGetVehiclesQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetVehiclesQuery,
+    GetVehiclesQueryVariables
+  >
+) {
+  return Apollo.useQuery<GetVehiclesQuery, GetVehiclesQueryVariables>(
+    GetVehiclesDocument,
+    baseOptions
+  )
+}
+
+export function useGetVehiclesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetVehiclesQuery,
+    GetVehiclesQueryVariables
+  >
+) {
+  return Apollo.useLazyQuery<GetVehiclesQuery, GetVehiclesQueryVariables>(
+    GetVehiclesDocument,
+    baseOptions
+  )
+}
+
+export type GetVehiclesQueryHookResult = ReturnType<typeof useGetVehiclesQuery>
+export type GetVehiclesLazyQueryHookResult = ReturnType<
+  typeof useGetVehiclesLazyQuery
+>
+export type GetVehiclesQueryResult = Apollo.QueryResult<
+  GetVehiclesQuery,
+  GetVehiclesQueryVariables
+>
+export const PlateSearchDocument = gql`
+  query plateSearch($data: QueryInput!) {
+    vehicles(data: $data) {
+      entities {
+        model
+        plate
+      }
+    }
+    customers(data: $data) {
+      entities {
+        name
+        document
+        email
+        ordersCount
+        lastOrderDate
+        address {
+          street
+          number
+          postalCode
+          city
+          state
+          neighborhood
+          complement
+        }
+        phones {
+          main
+        }
+      }
+    }
+  }
+`
+
+/**
+ * __usePlateSearchQuery__
+ *
+ * To run a query within a React component, call `usePlateSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePlateSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePlateSearchQuery({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function usePlateSearchQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    PlateSearchQuery,
+    PlateSearchQueryVariables
+  >
+) {
+  return Apollo.useQuery<PlateSearchQuery, PlateSearchQueryVariables>(
+    PlateSearchDocument,
+    baseOptions
+  )
+}
+
+export function usePlateSearchLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    PlateSearchQuery,
+    PlateSearchQueryVariables
+  >
+) {
+  return Apollo.useLazyQuery<PlateSearchQuery, PlateSearchQueryVariables>(
+    PlateSearchDocument,
+    baseOptions
+  )
+}
+
+export type PlateSearchQueryHookResult = ReturnType<typeof usePlateSearchQuery>
+export type PlateSearchLazyQueryHookResult = ReturnType<
+  typeof usePlateSearchLazyQuery
+>
+export type PlateSearchQueryResult = Apollo.QueryResult<
+  PlateSearchQuery,
+  PlateSearchQueryVariables
+>

@@ -1,0 +1,29 @@
+  query plateSearch($data: QueryInput!) {
+    vehicles(data: $data) {
+      entities {
+        model
+        plate
+      }
+    }
+    customers(data: $data) {
+      entities {
+        name
+        document
+        email
+        ordersCount
+        lastOrderDate
+        address {
+          street
+          number
+          postalCode
+          city
+          state
+          neighborhood
+          complement
+        }
+        phones {
+          main
+        }
+      }
+    }
+  }

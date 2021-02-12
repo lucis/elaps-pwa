@@ -1,12 +1,13 @@
 import { Steps } from 'antd'
 import type { FC } from 'react'
-import React, { useCallback } from 'react'
+import React, { useEffect, useCallback } from 'react'
 
 import {
   useNewCheckin,
   useNewCheckinDispatch,
 } from '../../contexts/new-checkin/NewCheckinContext'
 import LicensePlateInput from '../LicensePlateInput'
+import usePlateSearch from '../../hooks/usePlateSearch'
 
 const { Step } = Steps
 
@@ -14,7 +15,7 @@ const AddCheckinStepper: FC = () => {
   const [{ page }] = useNewCheckin()
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col my-3">
       <Steps current={page}>
         <Step title="Placa" />
         <Step title="Cliente" />
@@ -29,18 +30,26 @@ const AddCheckinStepper: FC = () => {
 }
 
 const FirstStep: FC = () => {
-  // TODO: Add option to search plate by customer name
-
   const dispatch = useNewCheckinDispatch()
+  const { searchPlate, loading, data, error } = usePlateSearch()
 
   const onSelectPlate = useCallback(
     (plate: string | null) => {
-      // load plates
-      // if vehicle, set vehicle
-      dispatch({ type: 'UPDATE', args: { page: 1 } })
+      if (plate) {
+        searchPlate(plate)
+      }
     },
-    [dispatch]
+    [searchPlate]
   )
+
+  useEffect(() => {
+    if (!data) {
+      return
+    }
+
+    console.log(data)
+    dispatch({ type: 'UPDATE', args: { page: 1 } })
+  }, [data, dispatch])
 
   return (
     <div className="flex justify-center my-3">
