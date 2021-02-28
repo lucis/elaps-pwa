@@ -16,7 +16,6 @@ const useOrdersFilter = (orders: Order[]) => {
     const searchTool = new JsSearch.Search('id')
 
     searchTool.sanitizer = new OrderSanitizer()
-
     searchTool.addIndex('itemsDescriptor')
     searchTool.addDocuments(orders)
     setSearch(searchTool)
@@ -41,10 +40,12 @@ const useOrdersFilter = (orders: Order[]) => {
       const result = search.search(term) as Order[]
 
       setFiltered(
-        result.map(({ itemsDescriptor, ...rest }) => ({
-          itemsDescriptor: highlighter.highlight(itemsDescriptor, [term]),
-          ...rest,
-        }))
+        result
+          .map(({ itemsDescriptor, ...rest }) => ({
+            itemsDescriptor: highlighter.highlight(itemsDescriptor, [term]),
+            ...rest,
+          }))
+          .sort(({ id: idA }, { id: idB }) => idB - idA)
       )
     },
     [setFiltered, search, orders, highlighter]
