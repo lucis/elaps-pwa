@@ -16,7 +16,7 @@ const HistorySearchPage: FC<RouteComponentProps> = () => {
       searchPlate(plate)
       set(true)
     },
-    [searchPlate]
+    [searchPlate, set]
   )
 
   return (
