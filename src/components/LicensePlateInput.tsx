@@ -61,7 +61,7 @@ const LicensePlateInput: FC<Props> = ({
       onValidPlate('')
       set(false)
       reset()
-    }, 1000 * 3)
+    }, 1000 * 60 * 1.5)
 
     timerRef.current = timer
   }
